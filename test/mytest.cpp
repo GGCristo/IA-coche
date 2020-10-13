@@ -9,7 +9,7 @@ TEST_CASE("Puedo recorrer todo el vector")
   {
     for (int j = 0; j < mapa.get_Mapa_()[i].size(); j++)
     {
-      Mapa[i][j];
+      mapa.get_Mapa_()[i][j];
     }
   }
 }
