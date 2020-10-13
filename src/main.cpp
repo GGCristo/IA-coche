@@ -11,5 +11,6 @@ int main()
   int column;
   std::cin >> column;
   Mapa mapa = Mapa(row, column);
+  mapa.mostrar(std::cout);
   return 0;
 }

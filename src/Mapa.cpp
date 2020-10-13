@@ -3,13 +3,43 @@
 
 Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
 {
-  for (int i = 0; i < row; i++)
+  M_ = row;
+  N_ = column;
+  for (int i = 0; i < M_; i++)
   {
-    Mapa_[i].resize(column);
+    Mapa_[i].resize(N_);
   }
 }
 
-MATRIX& Mapa::get_Mapa_()
+MATRIX& Mapa::get_Mapa()
 {
   return Mapa_;
+}
+
+std::ostream& Mapa::mostrar(std::ostream& os)
+{
+  // Cabecera
+  for (int i = 0; i < N_; i++)
+  {
+    os << " -";
+  }
+  os << '\n';
+  for (int i = 0; i < M_; i++)
+  {
+    os << "|";
+    for (int j = 0; j < N_; j++)
+    {
+      os << ((Mapa_[i][j].getOcupacion()) ? 'x' : ' ');
+      os << "|";
+    }
+    os << '\n';
+    // Pie
+    for (int z = 0; z < N_; z++)
+    {
+      os << " -";
+    }
+    os << '\n';
+  }
+  os << '\n';
+  return os;
 }

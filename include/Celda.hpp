@@ -5,4 +5,6 @@ class Celda
     bool Ocupada_;
   public:
     Celda();
+    const bool& getOcupacion();
+    void Ocupar();
 };
