@@ -8,6 +8,7 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
     Mapa_[i].resize(column);
   }
 }
+
 MATRIX& Mapa::get_Mapa_()
 {
   return Mapa_;
