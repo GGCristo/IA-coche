@@ -1,9 +1,12 @@
+#pragma once
 #include <vector>
-
+#include "Celda.hpp"
+typedef std::vector<std::vector<Celda>> MATRIX;
 class Mapa
 {
   private:
-    std::vector<std::vector<int>> Mapa_;
+    MATRIX Mapa_;
   public:
     Mapa(const int& row, const int& column);
+    MATRIX& get_Mapa_();
 };

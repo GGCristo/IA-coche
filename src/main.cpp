@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../include/Mapa.hpp"
+#include "../include/Celda.hpp"
 
 int main()
 {

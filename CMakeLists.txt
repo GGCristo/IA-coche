@@ -4,6 +4,7 @@ project(IA-Coche)
 
 set(SOURCES
   src/Mapa.cpp
+  src/Celda.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
