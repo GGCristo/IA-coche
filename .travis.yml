@@ -1,0 +1,27 @@
+dist: trusty
+language: cpp
+compiler: gcc
+
+os: linux
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-7
+      - g++-7
+before_install:
+  - sudo apt-get -y install libxml2-dev
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8 -std=c++11 -DENABLE_REINFORCEMENT_LEARNING" CC="gcc-4.8"; fi
+script:
+  - export CC=gcc-7
+  - export CXX=g++-7
+  - gcc -v && g++ -v
+  - make test
+notifications:
+  email:
+    recipients:
+    - cgg.code@gmail.com
+    on_success: never
+    on_failure: always
