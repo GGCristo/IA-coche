@@ -31,7 +31,36 @@ int main()
     {
       mapa.get_Mapa()[Random::get(0, row - 1)][Random::get(0, column - 1)].Ocupar();
     }
+    mapa.mostrar(std::cout);
   }
-  mapa.mostrar(std::cout);
+  else
+  {
+    int otro;
+    do
+    {
+      std::cout << "Fila del obstaculo: ";
+      std::cin >> row;
+      std::cout << "Columna del obstaculo ";
+      std::cin >> column;
+      if (row - 1 > mapa.getRow() || column - 1 > mapa.getColumn())
+      {
+        std::cout << "La Fila o la Columna estan fuera de limite\n";
+        otro = 1;
+      }
+      else
+      {
+        if (mapa.get_Mapa()[row - 1][column - 1].getOcupacion())
+          std::cout << "Esa posición ya esta ocupada...\n";
+        else
+        {
+          mapa.get_Mapa()[row - 1][column - 1].Ocupar();
+          mapa.mostrar(std::cout);
+        }
+        std::cout << "¿Quiere poner otro obstaculo (Si[1];No[0])?: ";
+        std::cin >> otro;
+      }
+    }
+    while(otro);
+  }
   return 0;
 }

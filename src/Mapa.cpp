@@ -11,6 +11,16 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   }
 }
 
+const int& Mapa::getRow() const
+{
+  return M_;
+}
+
+const int& Mapa::getColumn() const
+{
+  return N_;
+}
+
 MATRIX& Mapa::get_Mapa()
 {
   return Mapa_;

@@ -13,6 +13,8 @@ class Mapa
     int N_; // Columnas
   public:
     Mapa(const int& row, const int& column);
+    const int& getRow() const;
+    const int& getColumn() const;
     MATRIX& get_Mapa();
     std::ostream& mostrar(std::ostream&);
 };
