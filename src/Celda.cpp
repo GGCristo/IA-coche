@@ -3,9 +3,10 @@
 Celda::Celda()
 {
   Ocupada_ = false;
+  Estado_ = -1;
 }
 
-const bool& Celda::getOcupacion()
+const bool& Celda::getOcupacion() const
 {
   return Ocupada_;
 }
