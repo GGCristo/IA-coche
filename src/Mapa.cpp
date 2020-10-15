@@ -71,7 +71,7 @@ void Mapa::ColocarEstadoInicial()
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
     }
-    else if (fila != getRow() || columna != getColumn())
+    else if (fila != getRow() && columna != getColumn())
     {
       std::cout << "Coloque el punto en un extremo\n";
       control = true;
@@ -79,6 +79,8 @@ void Mapa::ColocarEstadoInicial()
   }while(control);
 
   Mapa_[fila - 1][columna - 1].Estado_ = 0;
+  EstadoInicial.first = fila - 1;
+  EstadoInicial.second = columna - 1;
   mostrar(std::cout);
 }
 
@@ -89,6 +91,13 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   for (int i = 0; i < M_; i++)
   {
     Mapa_[i].resize(N_);
+    // El contenedor ya esta dimensionado pero necesito que cada celda
+    // sea conciente de su posición.
+    for (int j = 0; j < N_; j++)
+    {
+      Mapa_[i][j].i = i;
+      Mapa_[i][j].j = j;
+    }
   }
 
   mostrar(std::cout);
@@ -113,6 +122,11 @@ MATRIX& Mapa::get_Mapa()
   return Mapa_;
 }
 
+void Mapa::ConstruirGrafo()
+{
+
+}
+
 std::ostream& Mapa::mostrar(std::ostream& os)
 {
   // Cabecera
@@ -126,12 +140,17 @@ std::ostream& Mapa::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Mapa_[i][j].Estado_ == 0)
+      if (Mapa_[i][j].Estado_ == -2)
+      {
+        os << 'x';
+      }
+      else if (Mapa_[i][j].Estado_ != 0)
+      {
+        os << ' ';
+      }
+      else
       {
         os << 'I';
-      } else
-      {
-        os << ((Mapa_[i][j].getOcupacion()) ? 'x' : ' ');
       }
       os << "|";
     }

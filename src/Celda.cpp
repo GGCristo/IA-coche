@@ -2,16 +2,15 @@
 
 Celda::Celda()
 {
-  Ocupada_ = false;
   Estado_ = -1;
 }
 
-const bool& Celda::getOcupacion() const
+bool Celda::getOcupacion() const
 {
-  return Ocupada_;
+  return (Estado_ == -2);
 }
 
 void Celda::Ocupar()
 {
-  Ocupada_ = true;
+  Estado_ = -2;
 }

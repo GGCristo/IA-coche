@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../include/Mapa.hpp"
 #include "../include/Celda.hpp"
+#include "../include/Grafo.hpp"
 
 
 int main()
@@ -13,5 +14,7 @@ int main()
   std::cin >> column;
 
   Mapa mapa = Mapa(row, column);
+
+  Grafo grafo(mapa);
   return 0;
 }
