@@ -13,6 +13,7 @@ typedef std::vector<std::vector<Celda>> MATRIX;
 class Mapa
 {
   private:
+    static int PorcentajeDeObstaculos;
     friend class Grafo;
     MATRIX Mapa_;
     int M_; // Filas

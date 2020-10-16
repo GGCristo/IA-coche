@@ -11,4 +11,6 @@ class Celda
     Celda();
     bool getOcupacion() const;
     void Ocupar();
+    const int& getEstado() const;
+    void setEstado(const int&);
 };

@@ -14,3 +14,13 @@ void Celda::Ocupar()
 {
   Estado_ = -2;
 }
+
+const int& Celda::getEstado() const
+{
+  return Estado_;
+}
+
+void Celda::setEstado(const int& estado)
+{
+  Estado_ = estado;
+}

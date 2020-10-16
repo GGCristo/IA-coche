@@ -12,7 +12,7 @@ void Mapa::ConstruirObstaculos()
 
   if (opcion == 1)
   {
-    for (int i = 0; i < M_ * N_ * 0.1; i++)
+    for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/10); i++)
     {
       Mapa_[Random::get(0, M_ - 1)][Random::get(0, N_ - 1)].Ocupar();
     }

@@ -3,6 +3,7 @@
 #include "../include/Celda.hpp"
 #include "../include/Grafo.hpp"
 
+int Mapa::PorcentajeDeObstaculos = 10;
 
 int main()
 {
