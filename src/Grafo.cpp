@@ -2,6 +2,7 @@
 
 Grafo::Grafo(Mapa& mapa)
 {
+  // TODO
   TablaGrafo_.resize(Mapa::PorcentajeDeObstaculos);
   // Introduzco el estado inicial (estado 0);
   Cola_.push(std::make_pair(mapa.EstadoInicial.first, mapa.EstadoInicial.second));

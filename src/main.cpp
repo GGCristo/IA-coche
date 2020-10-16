@@ -16,6 +16,6 @@ int main()
 
   Mapa mapa = Mapa(row, column);
 
-  Grafo grafo(mapa);
+  // Grafo grafo(mapa);
   return 0;
 }

@@ -12,7 +12,7 @@ void Mapa::ConstruirObstaculos()
 
   if (opcion == 1)
   {
-    for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/10); i++)
+    for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/100.0); i++)
     {
       Mapa_[Random::get(0, M_ - 1)][Random::get(0, N_ - 1)].Ocupar();
     }
@@ -71,7 +71,8 @@ void Mapa::ColocarEstadoInicial()
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
     }
-    else if (fila != getRow() && columna != getColumn())
+    else if (fila != 1 && columna != 1 &&
+             fila != getRow() && columna != getColumn())
     {
       std::cout << "Coloque el punto en un extremo\n";
       control = true;
