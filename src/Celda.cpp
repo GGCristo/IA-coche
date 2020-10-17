@@ -3,12 +3,13 @@
 
 Celda::Celda(const float& tamano)
 {
+  cargarTexturas();
   i_ = -1;
   j_ = -1;
   Estado_ = -1;
   celda.setSize(sf::Vector2f(tamano, tamano));
   celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
-  celda.setFillColor(sf::Color::Black);
+  celda.setTexture(&texturas[0]);
 
   muros[0].setSize(sf::Vector2f(tamano, tamano / 8));
   muros[0].setOrigin(muros[0].getSize().x / 2, muros[0].getSize().y / 2);
@@ -38,7 +39,7 @@ bool Celda::getOcupacion() const
 void Celda::Ocupar()
 {
   Estado_ = -2;
-  celda.setFillColor(sf::Color::Green);
+  celda.setTexture(&texturas[1], true);
 }
 
 const int& Celda::getEstado() const
@@ -68,6 +69,20 @@ void Celda::setPosicion()
                         celda.getPosition().y));
   muros[3].setPosition(sf::Vector2f(celda.getPosition().x + (celda.getSize().x / 2),
                         celda.getPosition().y));
+}
+
+void Celda::cargarTexturas()
+{
+  if(!texturas[0].loadFromFile("assets/Graphics/grass.png"))
+  {
+    std::cerr << "Fallo al cargar la textura de la hierba\n";
+    exit(-1);
+  }
+  if (!texturas[1].loadFromFile("assets/Graphics/box.jpeg"))
+  {
+    std::cerr << "Fallo al cargar la textura de la caja\n";
+    exit(-1);
+  }
 }
 
 void Celda::draw(sf::RenderTarget& target, sf::RenderStates states) const
