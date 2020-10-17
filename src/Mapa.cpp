@@ -85,6 +85,18 @@ void Mapa::ColocarEstadoInicial()
   mostrar(std::cout);
 }
 
+void Mapa::draw(sf::RenderWindow& window)
+{
+  for (int i = 0; i < M_; i++)
+  {
+    for (int j = 0; j < N_; j++)
+    {
+      window.draw(Mapa_[i][j]);
+    }
+  }
+
+}
+
 Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
 {
   M_ = row;
@@ -96,8 +108,9 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
     {
-      Mapa_[i][j].i = i;
-      Mapa_[i][j].j = j;
+      Mapa_[i][j].i_ = i;
+      Mapa_[i][j].j_ = j;
+      Mapa_[i][j].setPosicion();
     }
   }
 

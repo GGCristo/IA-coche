@@ -1,3 +1,5 @@
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include <iostream>
 #include "../include/Mapa.hpp"
 #include "../include/Celda.hpp"
@@ -14,8 +16,22 @@ int main()
   int column;
   std::cin >> column;
 
-  Mapa mapa = Mapa(row, column);
+  Mapa mapa(row, column);
 
-  // Grafo grafo(mapa);
+  sf::RenderWindow window(sf::VideoMode(1080, 1024), "IA-COCHE");
+  window.setFramerateLimit(30);
+
+  while (window.isOpen())
+  {
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed)
+        window.close();
+    }
+    window.clear();
+    mapa.draw(window);
+    window.display();
+  }
   return 0;
 }

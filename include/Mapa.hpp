@@ -3,6 +3,9 @@
 #include <vector>
 #include <utility>
 #include "Celda.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+
 #include "../include/random.hpp" // Libreria ajena (https://github.com/effolkronium/random)
 
 // get base random alias which is auto seeded and has static API and internal state
@@ -29,4 +32,7 @@ class Mapa
     MATRIX& get_Mapa();
     void ConstruirGrafo();
     std::ostream& mostrar(std::ostream&);
+
+    // Interfaz
+    void draw(sf::RenderWindow& window);
 };
