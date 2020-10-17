@@ -21,6 +21,9 @@ int main()
   sf::RenderWindow window(sf::VideoMode(1080, 1024), "IA-COCHE");
   window.setFramerateLimit(30);
 
+  std::cout << "Tamaño ventanaX: " << window.getSize().x << '\n';
+  std::cout << "Tamaño ventanaY: " << window.getSize().y << '\n';
+
   while (window.isOpen())
   {
     sf::Event event;

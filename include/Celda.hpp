@@ -17,11 +17,12 @@ class Celda: public sf::Drawable
     sf::RectangleShape celda;
     sf::RectangleShape muros[4];
     // TODO añadir más texturas
-    sf::Texture texturas[3];
+    sf::Texture texturas[2];
 
     void setPosition(const sf::Vector2f&);
   public:
     Celda(const float& tamano = 50.F);
+    Celda(const Celda&);
     ~Celda() override;
     bool getOcupacion() const;
     void Ocupar();

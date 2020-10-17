@@ -9,23 +9,53 @@ Celda::Celda(const float& tamano)
   Estado_ = -1;
   celda.setSize(sf::Vector2f(tamano, tamano));
   celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
-  celda.setTexture(&texturas[0]);
+  celda.setTexture(&texturas[0], true);
 
-  muros[0].setSize(sf::Vector2f(tamano, tamano / 8));
+  auto acortamiento = 20;
+  muros[0].setSize(sf::Vector2f(tamano, tamano / acortamiento));
   muros[0].setOrigin(muros[0].getSize().x / 2, muros[0].getSize().y / 2);
 
-  muros[1].setSize(sf::Vector2f(tamano, tamano / 8));
+  muros[1].setSize(sf::Vector2f(tamano, tamano / acortamiento));
   muros[1].setOrigin(muros[1].getSize().x / 2, muros[1].getSize().y / 2);
 
 
-  muros[2].setSize(sf::Vector2f(tamano / 8, tamano));
+  muros[2].setSize(sf::Vector2f(tamano / acortamiento, tamano));
   muros[2].setOrigin(muros[2].getSize().x / 2, muros[2].getSize().y / 2);
 
-  muros[3].setSize(sf::Vector2f(tamano / 8, tamano));
+  muros[3].setSize(sf::Vector2f(tamano / acortamiento, tamano));
   muros[3].setOrigin(muros[3].getSize().x / 2, muros[3].getSize().y / 2);
 
   for (int i = 0; i < 4; i++)
-    muros[i].setFillColor(sf::Color::Cyan);
+    muros[i].setFillColor(sf::Color::Black);
+}
+
+// TODO Cuidado con la concordancia en las texturas
+Celda::Celda(const Celda& celda2)
+{
+  std::cout << "Entro " << '\n';
+  cargarTexturas();
+  i_ = celda2.i_;
+  j_ = celda2.j_;
+  Estado_ = celda2.Estado_;
+  celda.setSize(sf::Vector2f(celda2.celda.getSize()));
+  celda.setOrigin(celda2.celda.getOrigin());
+  celda.setTexture(&texturas[0], true);
+
+  auto acortamiento = 20;
+  muros[0].setSize(celda2.muros[0].getSize());
+  muros[0].setOrigin(celda2.muros[0].getOrigin());
+
+  muros[1].setSize(celda2.muros[1].getSize());
+  muros[1].setOrigin(celda2.muros[1].getOrigin());
+
+  muros[2].setSize(celda2.muros[2].getSize());
+  muros[2].setOrigin(celda2.muros[2].getOrigin());
+
+  muros[3].setSize(celda2.muros[3].getSize());
+  muros[3].setOrigin(celda2.muros[3].getOrigin());
+
+  for (int i = 0; i < 4; i++)
+    muros[i].setFillColor(celda2.muros[i].getFillColor());
 }
 
 Celda::~Celda()
@@ -56,9 +86,9 @@ void Celda::setPosicion()
 {
   assert(i_ != -1 && j_ != -1);
 
-  celda.setPosition((celda.getSize().y) * (float)j_ + celda.getSize().y / 2,
-                    (celda.getSize().x) * (float)i_ + celda.getSize().x / 2);
-
+  celda.setPosition((celda.getSize().y) * (float)j_ + celda.getSize().y / 2 + muros[0].getSize().y,
+                    (celda.getSize().x) * (float)i_ + celda.getSize().x / 2 + muros[2].getSize().x);
+  // TODO encontrar punto para cargando
   std::cout << i_ << ' ' << j_ << ": " << celda.getPosition().x << ' ' << celda.getPosition().y << '\n';
 
   muros[0].setPosition(sf::Vector2f(celda.getPosition().x,

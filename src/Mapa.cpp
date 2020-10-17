@@ -103,7 +103,7 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Mapa_[i].resize(N_);
+    Mapa_[i].resize(N_, Celda(60.F));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
