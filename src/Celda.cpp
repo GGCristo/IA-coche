@@ -1,15 +1,15 @@
 #include "../include/Celda.hpp"
+#include "../include/Texturas.hpp"
 #include <cassert>
 
 Celda::Celda(const float& tamano)
 {
-  cargarTexturas();
   i_ = -1;
   j_ = -1;
   Estado_ = -1;
   celda.setSize(sf::Vector2f(tamano, tamano));
   celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
-  celda.setTexture(&texturas[0], true);
+  celda.setTexture(&Texturas::getTexturas(0), true);
 
   auto acortamiento = 20;
   muros[0].setSize(sf::Vector2f(tamano, tamano / acortamiento));
@@ -33,13 +33,12 @@ Celda::Celda(const float& tamano)
 Celda::Celda(const Celda& celda2)
 {
   std::cout << "Entro " << '\n';
-  cargarTexturas();
   i_ = celda2.i_;
   j_ = celda2.j_;
   Estado_ = celda2.Estado_;
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
   celda.setOrigin(celda2.celda.getOrigin());
-  celda.setTexture(&texturas[0], true);
+  celda.setTexture(&Texturas::getTexturas(0), true);
 
   auto acortamiento = 20;
   muros[0].setSize(celda2.muros[0].getSize());
@@ -69,7 +68,7 @@ bool Celda::getOcupacion() const
 void Celda::Ocupar()
 {
   Estado_ = -2;
-  celda.setTexture(&texturas[1], true);
+  celda.setTexture(&Texturas::getTexturas(1), true);
 }
 
 const int& Celda::getEstado() const

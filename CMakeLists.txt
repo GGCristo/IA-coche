@@ -6,6 +6,7 @@ set(SOURCES
   src/Mapa.cpp
   src/Celda.cpp
   src/Grafo.cpp
+  src/Texturas.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
