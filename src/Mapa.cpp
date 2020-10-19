@@ -72,17 +72,29 @@ void Mapa::ColocarEstadoInicial()
       control = true;
     }
     else if (fila != 1 && columna != 1 &&
-             fila != getRow() && columna != getColumn())
+             fila != M_ && columna != N_)
     {
       std::cout << "Coloque el punto en un extremo\n";
       control = true;
     }
   }while(control);
 
-  Mapa_[fila - 1][columna - 1].Estado_ = 0;
+  Mapa_[fila - 1][columna - 1].setEstado(0);
   EstadoInicial.first = fila - 1;
   EstadoInicial.second = columna - 1;
   mostrar(std::cout);
+}
+
+void Mapa::draw(sf::RenderWindow& window)
+{
+  for (int i = 0; i < M_; i++)
+  {
+    for (int j = 0; j < N_; j++)
+    {
+      window.draw(Mapa_[i][j]);
+    }
+  }
+
 }
 
 Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
@@ -91,13 +103,12 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Mapa_[i].resize(N_);
+    Mapa_[i].resize(N_, Celda(60.F));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
     {
-      Mapa_[i][j].i = i;
-      Mapa_[i][j].j = j;
+      Mapa_[i][j].setPosicion(i, j);
     }
   }
 
@@ -141,11 +152,11 @@ std::ostream& Mapa::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Mapa_[i][j].Estado_ == -2)
+      if (Mapa_[i][j].getEstado() == -2)
       {
         os << 'x';
       }
-      else if (Mapa_[i][j].Estado_ != 0)
+      else if (Mapa_[i][j].getEstado() != 0)
       {
         os << ' ';
       }

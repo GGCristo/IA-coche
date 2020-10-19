@@ -1,0 +1,11 @@
+ESTADOS
+-1 = Por defecto la celda todavía no ha sido tratada
+-2 = Obstaculo
+ 0 = EstadoInicial
+TEXTURAS
+0 = HIERBA
+1 = OBSTACULO
+2 = ENTRADA
+
+ERRORES
+1 = FALLO AL CARGAR UNA TEXTURA
