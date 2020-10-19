@@ -37,8 +37,9 @@ Celda::Celda(const Celda& celda2)
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
   celda.setOrigin(celda2.celda.getOrigin());
 
-  // TODO Cuidado con la concordancia en las texturas
-  celda.setTexture(&Texturas::getTexturas(0), true);
+  // TODO Cuidado antes fallaba ahora no, en caso de que falle intenta
+  // acceder a la posición del puntero que debería se una posición también
+  celda.setTexture(celda2.celda.getTexture(), true);
 
   muros[0].setSize(celda2.muros[0].getSize());
   muros[0].setOrigin(celda2.muros[0].getOrigin());
