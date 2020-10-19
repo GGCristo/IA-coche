@@ -8,7 +8,6 @@
 class Celda: public sf::Drawable
 {
   private:
-    friend class Mapa;
     int i_;
     int j_;
     int Estado_;
@@ -27,7 +26,7 @@ class Celda: public sf::Drawable
     void Ocupar();
     const int& getEstado() const;
     void setEstado(const int&);
-    void setPosicion();
+    void setPosicion(const int& i, const int& j);
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

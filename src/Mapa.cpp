@@ -108,9 +108,7 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
     {
-      Mapa_[i][j].i_ = i;
-      Mapa_[i][j].j_ = j;
-      Mapa_[i][j].setPosicion();
+      Mapa_[i][j].setPosicion(i, j);
     }
   }
 
@@ -154,11 +152,11 @@ std::ostream& Mapa::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Mapa_[i][j].Estado_ == -2)
+      if (Mapa_[i][j].getEstado() == -2)
       {
         os << 'x';
       }
-      else if (Mapa_[i][j].Estado_ != 0)
+      else if (Mapa_[i][j].getEstado() != 0)
       {
         os << ' ';
       }

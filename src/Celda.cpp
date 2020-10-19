@@ -87,9 +87,10 @@ void Celda::setEstado(const int& estado)
   }
 }
 
-void Celda::setPosicion()
+void Celda::setPosicion(const int& i, const int& j)
 {
-  assert(i_ != -1 && j_ != -1);
+  i_ = i;
+  j_ = j;
 
   celda.setPosition((celda.getSize().y) * (float)j_ + celda.getSize().y / 2 + muros[0].getSize().y,
                     (celda.getSize().x) * (float)i_ + celda.getSize().x / 2 + muros[2].getSize().x);

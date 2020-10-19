@@ -5,7 +5,7 @@ Texturas::Texturas()
 {
   if(!texturas[0].loadFromFile("assets/Graphics/grass.png"))
   {
-    throw "Fallo al cargar la texturas de la hierba\n";
+    throw "Fallo al cargar la textura de la hierba\n";
   }
   if (!texturas[1].loadFromFile("assets/Graphics/box.jpeg"))
   {
