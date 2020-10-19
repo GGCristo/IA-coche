@@ -6,10 +6,9 @@ Celda::Celda(const float& tamano)
 {
   i_ = -1;
   j_ = -1;
-  Estado_ = -1;
+  setEstado(-1);
   celda.setSize(sf::Vector2f(tamano, tamano));
   celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
-  celda.setTexture(&Texturas::getTexturas(0), true);
 
   auto acortamiento = 20;
   muros[0].setSize(sf::Vector2f(tamano, tamano / acortamiento));
@@ -33,13 +32,9 @@ Celda::Celda(const Celda& celda2)
 {
   i_ = celda2.i_;
   j_ = celda2.j_;
-  Estado_ = celda2.Estado_;
+  setEstado(celda2.Estado_);
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
   celda.setOrigin(celda2.celda.getOrigin());
-
-  // TODO Cuidado antes fallaba ahora no, en caso de que falle intenta
-  // acceder a la posición del puntero que debería se una posición también
-  celda.setTexture(celda2.celda.getTexture(), true);
 
   muros[0].setSize(celda2.muros[0].getSize());
   muros[0].setOrigin(celda2.muros[0].getOrigin());
@@ -75,16 +70,30 @@ const int& Celda::getEstado() const
   return Estado_;
 }
 
+// TODO Comprobar si esta ordenado de más comun a menos comun
 void Celda::setEstado(const int& estado)
 {
   Estado_ = estado;
-  if (Estado_ == 0)
+  if (Estado_ == -1)
+  {
+    celda.setTexture(&Texturas::getTexturas(0), true);
+  }
+  else if (Estado_ == 0)
   {
     celda.setTexture(&Texturas::getTexturas(2), true);
   }
   else if (Estado_ == -2)
   {
     celda.setTexture(&Texturas::getTexturas(1), true);
+  }
+  else if (Estado_ == 1)
+  {
+    celda.setTexture(&Texturas::getTexturas(3), true);
+  }
+  else
+  {
+    std::cerr << "El estado " << estado << " no existe\n";
+    exit(2);
   }
 }
 

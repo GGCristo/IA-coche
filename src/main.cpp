@@ -5,7 +5,8 @@
 #include "../include/Celda.hpp"
 #include "../include/Grafo.hpp"
 #include "../include/Texturas.hpp"
-
+// TODO Usar variables globales para definir los estados
+// (e.j const int OBSTACULO = -2)
 int Mapa::PorcentajeDeObstaculos = 10;
 
 int main()

@@ -66,7 +66,8 @@ void Mapa::ColocarEstadoInicial()
     std::cin >> fila;
     std::cout << "Columna: ";
     std::cin >> columna;
-    if (Mapa_[fila - 1][columna - 1].getOcupacion())
+    if (Mapa_[fila - 1][columna - 1].getOcupacion() ||
+        Mapa_[fila - 1][columna - 1].getEstado() == 1)
     {
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
@@ -82,6 +83,39 @@ void Mapa::ColocarEstadoInicial()
   Mapa_[fila - 1][columna - 1].setEstado(0);
   EstadoInicial.first = fila - 1;
   EstadoInicial.second = columna - 1;
+  mostrar(std::cout);
+}
+// TODO Refactorizar código para que no haya duplicidad con EstadoInicial
+void Mapa::ColocarEstadoFinal()
+{
+  bool control;
+  int columna;
+  int fila;
+  do
+  {
+    control = false;
+    std::cout << "¿Donde quiere colocar el punto Final?\n";
+    std::cout << "Fila: ";
+    std::cin >> fila;
+    std::cout << "Columna: ";
+    std::cin >> columna;
+    if (Mapa_[fila - 1][columna - 1].getOcupacion() || 
+        Mapa_[fila - 1][columna - 1].getEstado() == 0)
+    {
+      std::cout << "Esa casilla esta ocupada, use otra\n";
+      control = true;
+    }
+    else if (fila != 1 && columna != 1 &&
+             fila != M_ && columna != N_)
+    {
+      std::cout << "Coloque el punto en un extremo\n";
+      control = true;
+    }
+  }while(control);
+
+  Mapa_[fila - 1][columna - 1].setEstado(1);
+  EstadoFinal.first = fila - 1;
+  EstadoFinal.second = columna - 1;
   mostrar(std::cout);
 }
 
@@ -117,6 +151,8 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   ConstruirObstaculos();
 
   ColocarEstadoInicial();
+
+  ColocarEstadoFinal();
 }
 
 const int& Mapa::getRow() const
@@ -156,13 +192,17 @@ std::ostream& Mapa::mostrar(std::ostream& os)
       {
         os << 'x';
       }
-      else if (Mapa_[i][j].getEstado() != 0)
+      else if (Mapa_[i][j].getEstado() == -1)
       {
         os << ' ';
       }
-      else
+      else if (Mapa_[i][j].getEstado() == 0)
       {
         os << 'I';
+      }
+      else
+      {
+        os << 'F';
       }
       os << "|";
     }

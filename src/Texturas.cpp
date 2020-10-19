@@ -15,6 +15,10 @@ Texturas::Texturas()
   {
     throw "Fallo al cargar la textura de la Entrada\n";
   }
+  if (!texturas[3].loadFromFile("assets/Graphics/Salida.jpg"))
+  {
+    throw "Fallo al cargar la textura de la Salida";
+  }
 }
 
 const sf::Texture& Texturas::getTexturas(const int& i)

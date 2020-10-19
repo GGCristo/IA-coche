@@ -10,6 +10,9 @@ class Celda: public sf::Drawable
   private:
     int i_;
     int j_;
+    // TODO Solucionar problema serio de diseño, en un principio -1 es que no
+    // ha sido tratado por el algoritmo, pero también es cuando la celda es
+    // habitable.
     int Estado_;
     bool EFinal_;
 
@@ -19,7 +22,7 @@ class Celda: public sf::Drawable
 
     void setPosition(const sf::Vector2f&);
   public:
-    Celda(const float& tamano = 50.F);
+    explicit Celda(const float& tamano = 50.F);
     Celda(const Celda&);
     ~Celda() override;
     bool getOcupacion() const;
