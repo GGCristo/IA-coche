@@ -21,6 +21,7 @@ class Mapa
     MATRIX Mapa_;
     int M_; // Filas
     int N_; // Columnas
+    // TODO Necesito esto?
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();

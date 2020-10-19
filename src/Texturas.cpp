@@ -5,19 +5,21 @@ Texturas::Texturas()
 {
   if(!texturas[0].loadFromFile("assets/Graphics/grass.png"))
   {
-    std::cerr << "Fallo al cargar la textura de la hierba\n";
-    exit(-1);
+    throw "Fallo al cargar la texturas de la hierba\n";
   }
   if (!texturas[1].loadFromFile("assets/Graphics/box.jpeg"))
   {
-    std::cerr << "Fallo al cargar la textura de la caja\n";
-    exit(-1);
+    throw "Fallo al cargar la textura de la caja\n";
+  }
+  if (!texturas[2].loadFromFile("assets/Graphics/Entrada.png"))
+  {
+    throw "Fallo al cargar la textura de la Entrada\n";
   }
 }
 
 const sf::Texture& Texturas::getTexturas(const int& i)
 {
-  assert(i < 2);
   static Texturas instance;
+  assert(i < (int)instance.texturas.size());
   return instance.texturas[i];
 }

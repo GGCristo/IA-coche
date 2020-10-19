@@ -29,18 +29,17 @@ Celda::Celda(const float& tamano)
     muros[i].setFillColor(sf::Color::Black);
 }
 
-// TODO Cuidado con la concordancia en las texturas
 Celda::Celda(const Celda& celda2)
 {
-  std::cout << "Entro " << '\n';
   i_ = celda2.i_;
   j_ = celda2.j_;
   Estado_ = celda2.Estado_;
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
   celda.setOrigin(celda2.celda.getOrigin());
+
+  // TODO Cuidado con la concordancia en las texturas
   celda.setTexture(&Texturas::getTexturas(0), true);
 
-  auto acortamiento = 20;
   muros[0].setSize(celda2.muros[0].getSize());
   muros[0].setOrigin(celda2.muros[0].getOrigin());
 
@@ -67,8 +66,7 @@ bool Celda::getOcupacion() const
 
 void Celda::Ocupar()
 {
-  Estado_ = -2;
-  celda.setTexture(&Texturas::getTexturas(1), true);
+  setEstado(-2);
 }
 
 const int& Celda::getEstado() const
@@ -79,6 +77,14 @@ const int& Celda::getEstado() const
 void Celda::setEstado(const int& estado)
 {
   Estado_ = estado;
+  if (Estado_ == 0)
+  {
+    celda.setTexture(&Texturas::getTexturas(2), true);
+  }
+  else if (Estado_ == -2)
+  {
+    celda.setTexture(&Texturas::getTexturas(1), true);
+  }
 }
 
 void Celda::setPosicion()
@@ -87,8 +93,6 @@ void Celda::setPosicion()
 
   celda.setPosition((celda.getSize().y) * (float)j_ + celda.getSize().y / 2 + muros[0].getSize().y,
                     (celda.getSize().x) * (float)i_ + celda.getSize().x / 2 + muros[2].getSize().x);
-  // TODO encontrar punto para cargando
-  std::cout << i_ << ' ' << j_ << ": " << celda.getPosition().x << ' ' << celda.getPosition().y << '\n';
 
   muros[0].setPosition(sf::Vector2f(celda.getPosition().x,
                         celda.getPosition().y - (celda.getSize().y / 2)));
@@ -98,20 +102,6 @@ void Celda::setPosicion()
                         celda.getPosition().y));
   muros[3].setPosition(sf::Vector2f(celda.getPosition().x + (celda.getSize().x / 2),
                         celda.getPosition().y));
-}
-
-void Celda::cargarTexturas()
-{
-  if(!texturas[0].loadFromFile("assets/Graphics/grass.png"))
-  {
-    std::cerr << "Fallo al cargar la textura de la hierba\n";
-    exit(-1);
-  }
-  if (!texturas[1].loadFromFile("assets/Graphics/box.jpeg"))
-  {
-    std::cerr << "Fallo al cargar la textura de la caja\n";
-    exit(-1);
-  }
 }
 
 void Celda::draw(sf::RenderTarget& target, sf::RenderStates states) const

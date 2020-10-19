@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics/Texture.hpp>
 #include <iostream>
+#include <array>
 
 struct Texturas
 {
   private:
-    sf::Texture texturas[2];
+    std::array<sf::Texture, 3> texturas;
     Texturas();
   public:
-    static const sf::Texture& getTexturas(const int&);
+    static const sf::Texture& getTexturas(const int& = 0);
 };

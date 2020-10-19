@@ -72,14 +72,14 @@ void Mapa::ColocarEstadoInicial()
       control = true;
     }
     else if (fila != 1 && columna != 1 &&
-             fila != getRow() && columna != getColumn())
+             fila != M_ && columna != N_)
     {
       std::cout << "Coloque el punto en un extremo\n";
       control = true;
     }
   }while(control);
 
-  Mapa_[fila - 1][columna - 1].Estado_ = 0;
+  Mapa_[fila - 1][columna - 1].setEstado(0);
   EstadoInicial.first = fila - 1;
   EstadoInicial.second = columna - 1;
   mostrar(std::cout);

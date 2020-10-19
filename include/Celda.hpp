@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>
+#include <array>
 class Celda: public sf::Drawable
 {
   private:
@@ -15,9 +16,7 @@ class Celda: public sf::Drawable
 
     // Interfaz
     sf::RectangleShape celda;
-    sf::RectangleShape muros[4];
-    // TODO añadir más texturas
-    sf::Texture texturas[2];
+    std::array<sf::RectangleShape, 4> muros;
 
     void setPosition(const sf::Vector2f&);
   public:
@@ -29,7 +28,6 @@ class Celda: public sf::Drawable
     const int& getEstado() const;
     void setEstado(const int&);
     void setPosicion();
-    void cargarTexturas();
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

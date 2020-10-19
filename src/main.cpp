@@ -4,6 +4,7 @@
 #include "../include/Mapa.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Grafo.hpp"
+#include "../include/Texturas.hpp"
 
 int Mapa::PorcentajeDeObstaculos = 10;
 
@@ -15,6 +16,18 @@ int main()
   std::cout << "Introduzca el numero de columnas" << '\n';
   int column;
   std::cin >> column;
+
+  // Inicializo las texturas para que en caso de que no
+  // cargen el programa cierre de forma segura
+  try
+  {
+    Texturas::getTexturas();
+  }
+  catch(const char* msg)
+  {
+    std::cerr << msg;
+    return 1;
+  }
 
   Mapa mapa(row, column);
 
