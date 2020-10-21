@@ -30,6 +30,7 @@ class Celda: public sf::Drawable
     const int& getEstado() const;
     void setEstado(const int&);
     void setPosicion(const int& i, const int& j);
+    const sf::Vector2f& getSize();
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

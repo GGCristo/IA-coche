@@ -9,21 +9,21 @@ Celda::Celda(const float& tamano)
   j_ = -1;
   setEstado(vr::DEFAULT);
   celda.setSize(sf::Vector2f(tamano, tamano));
-  celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
+  // celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
 
-  auto acortamiento = 20;
+  auto acortamiento = 25;
   muros[0].setSize(sf::Vector2f(tamano, tamano / acortamiento));
-  muros[0].setOrigin(muros[0].getSize().x / 2, muros[0].getSize().y / 2);
+  // muros[0].setOrigin(muros[0].getSize().x / 2, muros[0].getSize().y / 2);
 
   muros[1].setSize(sf::Vector2f(tamano, tamano / acortamiento));
-  muros[1].setOrigin(muros[1].getSize().x / 2, muros[1].getSize().y / 2);
+  // muros[1].setOrigin(muros[1].getSize().x / 2, muros[1].getSize().y / 2);
 
 
   muros[2].setSize(sf::Vector2f(tamano / acortamiento, tamano));
-  muros[2].setOrigin(muros[2].getSize().x / 2, muros[2].getSize().y / 2);
+  // muros[2].setOrigin(muros[2].getSize().x / 2, muros[2].getSize().y / 2);
 
   muros[3].setSize(sf::Vector2f(tamano / acortamiento, tamano));
-  muros[3].setOrigin(muros[3].getSize().x / 2, muros[3].getSize().y / 2);
+   //muros[3].setOrigin(muros[3].getSize().x / 2, muros[3].getSize().y / 2);
 
   for (int i = 0; i < 4; i++)
     muros[i].setFillColor(sf::Color::Black);
@@ -35,19 +35,19 @@ Celda::Celda(const Celda& celda2)
   j_ = celda2.j_;
   setEstado(celda2.Estado_);
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
-  celda.setOrigin(celda2.celda.getOrigin());
+  // celda.setOrigin(celda2.celda.getOrigin());
 
   muros[0].setSize(celda2.muros[0].getSize());
-  muros[0].setOrigin(celda2.muros[0].getOrigin());
+  // muros[0].setOrigin(celda2.muros[0].getOrigin());
 
   muros[1].setSize(celda2.muros[1].getSize());
   muros[1].setOrigin(celda2.muros[1].getOrigin());
 
   muros[2].setSize(celda2.muros[2].getSize());
-  muros[2].setOrigin(celda2.muros[2].getOrigin());
+  // muros[2].setOrigin(celda2.muros[2].getOrigin());
 
   muros[3].setSize(celda2.muros[3].getSize());
-  muros[3].setOrigin(celda2.muros[3].getOrigin());
+  // muros[3].setOrigin(celda2.muros[3].getOrigin());
 
   for (int i = 0; i < 4; i++)
     muros[i].setFillColor(celda2.muros[i].getFillColor());
@@ -103,22 +103,27 @@ void Celda::setPosicion(const int& i, const int& j)
   i_ = i;
   j_ = j;
 
-  celda.setPosition((celda.getSize().y) * (float)j_ + celda.getSize().y / 2 + muros[0].getSize().y,
-                    (celda.getSize().x) * (float)i_ + celda.getSize().x / 2 + muros[2].getSize().x);
+  celda.setPosition((celda.getSize().y) * (float)j_,
+                    (celda.getSize().x) * (float)i_);
 
   muros[0].setPosition(sf::Vector2f(celda.getPosition().x,
-                        celda.getPosition().y - (celda.getSize().y / 2)));
+                        celda.getPosition().y));
   muros[1].setPosition(sf::Vector2f(celda.getPosition().x,
-                        celda.getPosition().y + (celda.getSize().y / 2)));
-  muros[2].setPosition(sf::Vector2f(celda.getPosition().x - (celda.getSize().x / 2),
                         celda.getPosition().y));
-  muros[3].setPosition(sf::Vector2f(celda.getPosition().x + (celda.getSize().x / 2),
+  muros[2].setPosition(sf::Vector2f(celda.getPosition().x,
                         celda.getPosition().y));
+  muros[3].setPosition(sf::Vector2f(celda.getPosition().x,
+                        celda.getPosition().y));
+}
+
+const sf::Vector2f& Celda::getSize()
+{
+  return celda.getSize();
 }
 
 void Celda::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   target.draw(celda);
   for (int i = 0; i < 4; i++)
-     target.draw(muros[i]);
+    target.draw(muros[i]);
 }

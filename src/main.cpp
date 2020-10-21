@@ -29,7 +29,7 @@ int main()
     return 1;
   }
 
-  Malla mapa(row, column);
+  Malla malla(row, column);
 
   sf::RenderWindow window(sf::VideoMode(1080, 1024), "IA-COCHE");
   window.setFramerateLimit(30);
@@ -43,10 +43,16 @@ int main()
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed)
+      {
         window.close();
+      }
+      if (event.type == sf::Event::MouseButtonPressed)
+      {
+        malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      }
     }
     window.clear();
-    mapa.draw(window);
+    malla.draw(window);
     window.display();
   }
   return 0;

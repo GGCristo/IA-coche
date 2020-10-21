@@ -15,43 +15,43 @@ void Malla::ConstruirObstaculos()
   {
     for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/100.0); i++)
     {
-      Mapa_[Random::get(0, M_ - 1)][Random::get(0, N_ - 1)].Ocupar();
+      Malla_[Random::get(0, M_ - 1)][Random::get(0, N_ - 1)].Ocupar();
     }
     mostrar(std::cout);
   }
-  else
-  {
-    int columna;
-    int fila;
-    int otro;
-    do
-    {
-      std::cout << "Fila del obstaculo: ";
-      std::cin >> fila;
-      std::cout << "Columna del obstaculo ";
-      std::cin >> columna;
-      if (fila - 1 > getRow() || columna - 1 > getColumn())
-      {
-        std::cout << "La Fila o la Columna estan fuera de limite\n";
-        otro = 1;
-      }
-      else
-      {
-        if (Mapa_[fila - 1][columna - 1].getOcupacion())
-        {
-          std::cout << "Esa posición ya esta ocupada...\n";
-        }
-        else
-        {
-          Mapa_[fila - 1][columna - 1].Ocupar();
-          mostrar(std::cout);
-        }
-        std::cout << "¿Quiere poner otro obstaculo (Si[1];No[0])?: ";
-        std::cin >> otro;
-      }
-    }
-    while(otro);
-  }
+  // else
+  // {
+  //   int columna;
+  //   int fila;
+  //   int otro;
+  //   do
+  //   {
+  //     std::cout << "Fila del obstaculo: ";
+  //     std::cin >> fila;
+  //     std::cout << "Columna del obstaculo ";
+  //     std::cin >> columna;
+  //     if (fila - 1 > getRow() || columna - 1 > getColumn())
+  //     {
+  //       std::cout << "La Fila o la Columna estan fuera de limite\n";
+  //       otro = 1;
+  //     }
+  //     else
+  //     {
+  //       if (Mapa_[fila - 1][columna - 1].getOcupacion())
+  //       {
+  //         std::cout << "Esa posición ya esta ocupada...\n";
+  //       }
+  //       else
+  //       {
+  //         Mapa_[fila - 1][columna - 1].Ocupar();
+  //         mostrar(std::cout);
+  //       }
+  //       std::cout << "¿Quiere poner otro obstaculo (Si[1];No[0])?: ";
+  //       std::cin >> otro;
+  //     }
+  //   }
+  //   while(otro);
+  // }
 }
 
 void Malla::ColocarPunto(const int& punto)
@@ -74,9 +74,9 @@ void Malla::ColocarPunto(const int& punto)
     std::cin >> fila;
     std::cout << "Columna: ";
     std::cin >> columna;
-    if (Mapa_[fila - 1][columna - 1].getOcupacion() || 
-        Mapa_[fila - 1][columna - 1].getEstado() == vr::INICIAL ||
-        Mapa_[fila - 1][columna - 1].getEstado() == vr::FINAL)
+    if (Malla_[fila - 1][columna - 1].getOcupacion() ||
+        Malla_[fila - 1][columna - 1].getEstado() == vr::INICIAL ||
+        Malla_[fila - 1][columna - 1].getEstado() == vr::FINAL)
     {
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
@@ -91,14 +91,14 @@ void Malla::ColocarPunto(const int& punto)
 
   if (punto == vr::FINAL)
   {
-    Mapa_[fila - 1][columna - 1].setEstado(vr::FINAL);
+    Malla_[fila - 1][columna - 1].setEstado(vr::FINAL);
     EstadoFinal.first = fila - 1;
     EstadoFinal.second = columna - 1;
   }
   else
   {
 
-    Mapa_[fila - 1][columna - 1].setEstado(vr::INICIAL);
+    Malla_[fila - 1][columna - 1].setEstado(vr::INICIAL);
     EstadoInicial.first = fila - 1;
     EstadoInicial.second = columna - 1;
   }
@@ -111,24 +111,24 @@ void Malla::draw(sf::RenderWindow& window)
   {
     for (int j = 0; j < N_; j++)
     {
-      window.draw(Mapa_[i][j]);
+      window.draw(Malla_[i][j]);
     }
   }
 
 }
 
-Malla::Malla(const int& row, const int& column) : Mapa_(row)
+Malla::Malla(const int& row, const int& column) : Malla_(row)
 {
   M_ = row;
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Mapa_[i].resize(N_, Celda(60.F));
+    Malla_[i].resize(N_, Celda(60.F));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
     {
-      Mapa_[i][j].setPosicion(i, j);
+      Malla_[i][j].setPosicion(i, j);
     }
   }
 
@@ -152,7 +152,21 @@ const int& Malla::getColumn() const
 
 MATRIX& Malla::get_Mapa()
 {
-  return Mapa_;
+  return Malla_;
+}
+
+void Malla::Click(int x, int y)
+{
+  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
+  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  if (Malla_[i_][j_].getOcupacion())
+  {
+    Malla_[i_][j_].setEstado(vr::DEFAULT);
+  }
+  else if (Malla_[i_][j_].getEstado() == vr::DEFAULT)
+  {
+    Malla_[i_][j_].setEstado(vr::OBSTACULO);
+  }
 }
 
 void Malla::ConstruirGrafo()
@@ -173,15 +187,15 @@ std::ostream& Malla::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Mapa_[i][j].getEstado() == vr::OBSTACULO)
+      if (Malla_[i][j].getEstado() == vr::OBSTACULO)
       {
         os << 'x';
       }
-      else if (Mapa_[i][j].getEstado() == vr::DEFAULT)
+      else if (Malla_[i][j].getEstado() == vr::DEFAULT)
       {
         os << ' ';
       }
-      else if (Mapa_[i][j].getEstado() == vr::INICIAL)
+      else if (Malla_[i][j].getEstado() == vr::INICIAL)
       {
         os << 'I';
       }

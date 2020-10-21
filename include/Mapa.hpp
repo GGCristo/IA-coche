@@ -18,7 +18,7 @@ class Malla
   private:
     static int PorcentajeDeObstaculos;
     friend class Grafo;
-    MATRIX Mapa_;
+    MATRIX Malla_;
     int M_; // Filas
     int N_; // Columnas
     // TODO Necesito esto?
@@ -31,6 +31,7 @@ class Malla
     const int& getRow() const;
     const int& getColumn() const;
     MATRIX& get_Mapa();
+    void Click(int, int);
     void ConstruirGrafo();
     std::ostream& mostrar(std::ostream&);
 
