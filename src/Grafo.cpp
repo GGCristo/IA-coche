@@ -1,4 +1,5 @@
 #include "../include/Grafo.hpp"
+#include "../include/variables.hpp"
 
 Grafo::Grafo(Mapa& mapa)
 {
@@ -22,7 +23,7 @@ Grafo::Grafo(Mapa& mapa)
     Celda& Este = mapa.get_Mapa()[celdaObjeto.first][celdaObjeto.second + 1];
 
     // Norte
-    if (Norte.getEstado() == -1)
+    if (Norte.getEstado() == vr::DEFAULT)
     {
       TablaGrafo_[contador][0] =
       ++contador;

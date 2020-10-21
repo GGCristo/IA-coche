@@ -1,4 +1,5 @@
 #include "../include/Mapa.hpp"
+#include "../include/variables.hpp"
 #include <vector>
 
 void Mapa::ConstruirObstaculos()
@@ -67,7 +68,7 @@ void Mapa::ColocarEstadoInicial()
     std::cout << "Columna: ";
     std::cin >> columna;
     if (Mapa_[fila - 1][columna - 1].getOcupacion() ||
-        Mapa_[fila - 1][columna - 1].getEstado() == 1)
+        Mapa_[fila - 1][columna - 1].getEstado() == vr::ESTADOFINAL)
     {
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
@@ -80,7 +81,7 @@ void Mapa::ColocarEstadoInicial()
     }
   }while(control);
 
-  Mapa_[fila - 1][columna - 1].setEstado(0);
+  Mapa_[fila - 1][columna - 1].setEstado(vr::ESTADOINICIAL);
   EstadoInicial.first = fila - 1;
   EstadoInicial.second = columna - 1;
   mostrar(std::cout);
@@ -100,7 +101,7 @@ void Mapa::ColocarEstadoFinal()
     std::cout << "Columna: ";
     std::cin >> columna;
     if (Mapa_[fila - 1][columna - 1].getOcupacion() || 
-        Mapa_[fila - 1][columna - 1].getEstado() == 0)
+        Mapa_[fila - 1][columna - 1].getEstado() == vr::ESTADOINICIAL)
     {
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
@@ -113,7 +114,7 @@ void Mapa::ColocarEstadoFinal()
     }
   }while(control);
 
-  Mapa_[fila - 1][columna - 1].setEstado(1);
+  Mapa_[fila - 1][columna - 1].setEstado(vr::ESTADOFINAL);
   EstadoFinal.first = fila - 1;
   EstadoFinal.second = columna - 1;
   mostrar(std::cout);
@@ -188,15 +189,15 @@ std::ostream& Mapa::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Mapa_[i][j].getEstado() == -2)
+      if (Mapa_[i][j].getEstado() == vr::OBSTACULO)
       {
         os << 'x';
       }
-      else if (Mapa_[i][j].getEstado() == -1)
+      else if (Mapa_[i][j].getEstado() == vr::DEFAULT)
       {
         os << ' ';
       }
-      else if (Mapa_[i][j].getEstado() == 0)
+      else if (Mapa_[i][j].getEstado() == vr::ESTADOINICIAL)
       {
         os << 'I';
       }

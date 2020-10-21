@@ -1,12 +1,13 @@
 #include "../include/Celda.hpp"
 #include "../include/Texturas.hpp"
+#include "../include/variables.hpp"
 #include <cassert>
 
 Celda::Celda(const float& tamano)
 {
   i_ = -1;
   j_ = -1;
-  setEstado(-1);
+  setEstado(vr::DEFAULT);
   celda.setSize(sf::Vector2f(tamano, tamano));
   celda.setOrigin(celda.getSize().x / 2, celda.getSize().y / 2);
 
@@ -57,12 +58,12 @@ Celda::~Celda()
 
 bool Celda::getOcupacion() const
 {
-  return (Estado_ == -2);
+  return (Estado_ == vr::OBSTACULO);
 }
 
 void Celda::Ocupar()
 {
-  setEstado(-2);
+  setEstado(vr::OBSTACULO);
 }
 
 const int& Celda::getEstado() const
@@ -74,19 +75,19 @@ const int& Celda::getEstado() const
 void Celda::setEstado(const int& estado)
 {
   Estado_ = estado;
-  if (Estado_ == -1)
+  if (Estado_ == vr::DEFAULT)
   {
     celda.setTexture(&Texturas::getTexturas(0), true);
   }
-  else if (Estado_ == 0)
+  else if (Estado_ == vr::ESTADOINICIAL)
   {
     celda.setTexture(&Texturas::getTexturas(2), true);
   }
-  else if (Estado_ == -2)
+  else if (Estado_ == vr::OBSTACULO)
   {
     celda.setTexture(&Texturas::getTexturas(1), true);
   }
-  else if (Estado_ == 1)
+  else if (Estado_ == vr::ESTADOFINAL)
   {
     celda.setTexture(&Texturas::getTexturas(3), true);
   }
