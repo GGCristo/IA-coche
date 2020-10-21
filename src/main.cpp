@@ -5,9 +5,8 @@
 #include "../include/Celda.hpp"
 #include "../include/Grafo.hpp"
 #include "../include/Texturas.hpp"
-// TODO Usar variables globales para definir los estados
-// (e.j const int OBSTACULO = -2)
-int Mapa::PorcentajeDeObstaculos = 10;
+
+int Malla::PorcentajeDeObstaculos = 10;
 
 int main()
 {
@@ -30,7 +29,7 @@ int main()
     return 1;
   }
 
-  Mapa mapa(row, column);
+  Malla mapa(row, column);
 
   sf::RenderWindow window(sf::VideoMode(1080, 1024), "IA-COCHE");
   window.setFramerateLimit(30);

@@ -2,7 +2,7 @@
 #include "../include/variables.hpp"
 #include <vector>
 
-void Mapa::ConstruirObstaculos()
+void Malla::ConstruirObstaculos()
 {
   int opcion;
   do
@@ -54,7 +54,7 @@ void Mapa::ConstruirObstaculos()
   }
 }
 
-void Mapa::ColocarPunto(const int& punto)
+void Malla::ColocarPunto(const int& punto)
 {
   bool control;
   int columna;
@@ -105,7 +105,7 @@ void Mapa::ColocarPunto(const int& punto)
   mostrar(std::cout);
 }
 
-void Mapa::draw(sf::RenderWindow& window)
+void Malla::draw(sf::RenderWindow& window)
 {
   for (int i = 0; i < M_; i++)
   {
@@ -117,7 +117,7 @@ void Mapa::draw(sf::RenderWindow& window)
 
 }
 
-Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
+Malla::Malla(const int& row, const int& column) : Mapa_(row)
 {
   M_ = row;
   N_ = column;
@@ -140,27 +140,27 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
   ColocarPunto(vr::FINAL);
 }
 
-const int& Mapa::getRow() const
+const int& Malla::getRow() const
 {
   return M_;
 }
 
-const int& Mapa::getColumn() const
+const int& Malla::getColumn() const
 {
   return N_;
 }
 
-MATRIX& Mapa::get_Mapa()
+MATRIX& Malla::get_Mapa()
 {
   return Mapa_;
 }
 
-void Mapa::ConstruirGrafo()
+void Malla::ConstruirGrafo()
 {
 
 }
 
-std::ostream& Mapa::mostrar(std::ostream& os)
+std::ostream& Malla::mostrar(std::ostream& os)
 {
   // Cabecera
   for (int i = 0; i < N_; i++)

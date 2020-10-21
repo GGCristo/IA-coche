@@ -1,10 +1,10 @@
 #include "../include/Grafo.hpp"
 #include "../include/variables.hpp"
 
-Grafo::Grafo(Mapa& mapa)
+Grafo::Grafo(Malla& mapa)
 {
   // TODO
-  TablaGrafo_.resize(Mapa::PorcentajeDeObstaculos);
+  TablaGrafo_.resize(Malla::PorcentajeDeObstaculos);
   // Introduzco el estado inicial (estado 0);
   Cola_.push(std::make_pair(mapa.EstadoInicial.first, mapa.EstadoInicial.second));
   // Numero de estados que creo, sin contar el inicial

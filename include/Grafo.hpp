@@ -10,5 +10,5 @@ class Grafo
     std::vector<std::array<int,4>> TablaGrafo_;
     std::queue<std::pair<int, int>> Cola_;
   public:
-    Grafo(Mapa&);
+    Grafo(Malla&);
 };

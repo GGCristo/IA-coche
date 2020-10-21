@@ -13,7 +13,7 @@ using Random = effolkronium::random_static;
 
 typedef std::vector<std::vector<Celda>> MATRIX;
 
-class Mapa
+class Malla
 {
   private:
     static int PorcentajeDeObstaculos;
@@ -27,7 +27,7 @@ class Mapa
     void ConstruirObstaculos();
     void ColocarPunto(const int&);
   public:
-    Mapa(const int& row, const int& column);
+    Malla(const int& row, const int& column);
     const int& getRow() const;
     const int& getColumn() const;
     MATRIX& get_Mapa();
