@@ -1,6 +1,5 @@
 #include "../include/Mapa.hpp"
 #include "../include/variables.hpp"
-#include <vector>
 
 void Malla::ConstruirObstaculos()
 {
@@ -123,7 +122,7 @@ Malla::Malla(const int& row, const int& column) : Malla_(row)
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Malla_[i].resize(N_, Celda(60.F));
+    Malla_[i].resize(N_, Celda(CalcularTamanoCelda(row, column)));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
@@ -167,11 +166,20 @@ void Malla::Click(int x, int y)
   {
     Malla_[i_][j_].setEstado(vr::OBSTACULO);
   }
+  std::cout << "He pinchado en: " << i_ << j_ << '\n';
 }
 
 void Malla::ConstruirGrafo()
 {
 
+}
+
+// El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
+const float Malla::CalcularTamanoCelda(const int& row, const int& column)
+{
+  auto anchura = sf::VideoMode::getDesktopMode().width / column;
+  auto altura  = sf::VideoMode::getDesktopMode().height / row;
+  return (float)(std::min(anchura, altura));
 }
 
 std::ostream& Malla::mostrar(std::ostream& os)

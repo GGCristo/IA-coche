@@ -1,4 +1,4 @@
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
 #include <iostream>
 #include "../include/Mapa.hpp"
@@ -7,6 +7,7 @@
 #include "../include/Texturas.hpp"
 
 int Malla::PorcentajeDeObstaculos = 10;
+const bool fullscreen = false;
 
 int main()
 {
@@ -31,8 +32,12 @@ int main()
 
   Malla malla(row, column);
 
-  sf::RenderWindow window(sf::VideoMode(1080, 1024), "IA-COCHE");
-  window.setFramerateLimit(30);
+  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE");
+  window.setFramerateLimit(15);
+  if (fullscreen)
+  {
+    window.create(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
+  }
 
   std::cout << "Tamaño ventanaX: " << window.getSize().x << '\n';
   std::cout << "Tamaño ventanaY: " << window.getSize().y << '\n';
@@ -42,7 +47,8 @@ int main()
     sf::Event event;
     while (window.pollEvent(event))
     {
-      if (event.type == sf::Event::Closed)
+      if (event.type == sf::Event::Closed ||
+          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
       {
         window.close();
       }

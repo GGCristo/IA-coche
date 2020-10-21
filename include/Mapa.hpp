@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <algorithm>
 #include "Celda.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -33,6 +34,7 @@ class Malla
     MATRIX& get_Mapa();
     void Click(int, int);
     void ConstruirGrafo();
+    const float CalcularTamanoCelda(const int& row, const int& column);
     std::ostream& mostrar(std::ostream&);
 
     // Interfaz
