@@ -79,7 +79,7 @@ void Celda::setEstado(const int& estado)
   {
     celda.setTexture(&Texturas::getTexturas(0), true);
   }
-  else if (Estado_ == vr::ESTADOINICIAL)
+  else if (Estado_ == vr::INICIAL)
   {
     celda.setTexture(&Texturas::getTexturas(2), true);
   }
@@ -87,7 +87,7 @@ void Celda::setEstado(const int& estado)
   {
     celda.setTexture(&Texturas::getTexturas(1), true);
   }
-  else if (Estado_ == vr::ESTADOFINAL)
+  else if (Estado_ == vr::FINAL)
   {
     celda.setTexture(&Texturas::getTexturas(3), true);
   }

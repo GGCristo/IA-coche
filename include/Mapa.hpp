@@ -25,8 +25,7 @@ class Mapa
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
-    void ColocarEstadoInicial();
-    void ColocarEstadoFinal();
+    void ColocarPunto(const int&);
   public:
     Mapa(const int& row, const int& column);
     const int& getRow() const;

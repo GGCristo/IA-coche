@@ -54,7 +54,7 @@ void Mapa::ConstruirObstaculos()
   }
 }
 
-void Mapa::ColocarEstadoInicial()
+void Mapa::ColocarPunto(const int& punto)
 {
   bool control;
   int columna;
@@ -62,46 +62,21 @@ void Mapa::ColocarEstadoInicial()
   do
   {
     control = false;
-    std::cout << "¿Donde quiere colocar el punto Inicial?\n";
-    std::cout << "Fila: ";
-    std::cin >> fila;
-    std::cout << "Columna: ";
-    std::cin >> columna;
-    if (Mapa_[fila - 1][columna - 1].getOcupacion() ||
-        Mapa_[fila - 1][columna - 1].getEstado() == vr::ESTADOFINAL)
+    if (punto == vr::FINAL)
     {
-      std::cout << "Esa casilla esta ocupada, use otra\n";
-      control = true;
+      std::cout << "¿Donde quiere colocar el punto Final?\n";
     }
-    else if (fila != 1 && columna != 1 &&
-             fila != M_ && columna != N_)
+    else
     {
-      std::cout << "Coloque el punto en un extremo\n";
-      control = true;
+      std::cout << "¿Donde quiere colocar el punto Inicial?\n";
     }
-  }while(control);
-
-  Mapa_[fila - 1][columna - 1].setEstado(vr::ESTADOINICIAL);
-  EstadoInicial.first = fila - 1;
-  EstadoInicial.second = columna - 1;
-  mostrar(std::cout);
-}
-// TODO Refactorizar código para que no haya duplicidad con EstadoInicial
-void Mapa::ColocarEstadoFinal()
-{
-  bool control;
-  int columna;
-  int fila;
-  do
-  {
-    control = false;
-    std::cout << "¿Donde quiere colocar el punto Final?\n";
     std::cout << "Fila: ";
     std::cin >> fila;
     std::cout << "Columna: ";
     std::cin >> columna;
     if (Mapa_[fila - 1][columna - 1].getOcupacion() || 
-        Mapa_[fila - 1][columna - 1].getEstado() == vr::ESTADOINICIAL)
+        Mapa_[fila - 1][columna - 1].getEstado() == vr::INICIAL ||
+        Mapa_[fila - 1][columna - 1].getEstado() == vr::FINAL)
     {
       std::cout << "Esa casilla esta ocupada, use otra\n";
       control = true;
@@ -114,9 +89,19 @@ void Mapa::ColocarEstadoFinal()
     }
   }while(control);
 
-  Mapa_[fila - 1][columna - 1].setEstado(vr::ESTADOFINAL);
-  EstadoFinal.first = fila - 1;
-  EstadoFinal.second = columna - 1;
+  if (punto == vr::FINAL)
+  {
+    Mapa_[fila - 1][columna - 1].setEstado(vr::FINAL);
+    EstadoFinal.first = fila - 1;
+    EstadoFinal.second = columna - 1;
+  }
+  else
+  {
+
+    Mapa_[fila - 1][columna - 1].setEstado(vr::INICIAL);
+    EstadoInicial.first = fila - 1;
+    EstadoInicial.second = columna - 1;
+  }
   mostrar(std::cout);
 }
 
@@ -151,9 +136,8 @@ Mapa::Mapa(const int& row, const int& column) : Mapa_(row)
 
   ConstruirObstaculos();
 
-  ColocarEstadoInicial();
-
-  ColocarEstadoFinal();
+  ColocarPunto(vr::INICIAL);
+  ColocarPunto(vr::FINAL);
 }
 
 const int& Mapa::getRow() const
@@ -197,7 +181,7 @@ std::ostream& Mapa::mostrar(std::ostream& os)
       {
         os << ' ';
       }
-      else if (Mapa_[i][j].getEstado() == vr::ESTADOINICIAL)
+      else if (Mapa_[i][j].getEstado() == vr::INICIAL)
       {
         os << 'I';
       }
