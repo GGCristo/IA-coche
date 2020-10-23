@@ -59,7 +59,7 @@ int main()
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-      malla.Control_Entrada(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      malla.Control_Entrada(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);    
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
     {

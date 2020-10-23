@@ -53,53 +53,23 @@ void Malla::ConstruirObstaculos()
   // }
 }
 
-void Malla::ColocarPunto(const int& punto)
+void Malla::ColocarPunto(const int& punto, int row, int col)
 {
   bool control;
-  int columna;
-  int fila;
-  do
-  {
-    control = false;
-    if (punto == vr::FINAL)
-    {
-      std::cout << "¿Donde quiere colocar el punto Final?\n";
-    }
-    else
-    {
-      std::cout << "¿Donde quiere colocar el punto Inicial?\n";
-    }
-    std::cout << "Fila: ";
-    std::cin >> fila;
-    std::cout << "Columna: ";
-    std::cin >> columna;
-    if (Malla_[fila - 1][columna - 1].getOcupacion() ||
-        Malla_[fila - 1][columna - 1].getEstado() == vr::INICIAL ||
-        Malla_[fila - 1][columna - 1].getEstado() == vr::FINAL)
-    {
-      std::cout << "Esa casilla esta ocupada, use otra\n";
-      control = true;
-    }
-    else if (fila != 1 && columna != 1 &&
-             fila != M_ && columna != N_)
-    {
-      std::cout << "Coloque el punto en un extremo\n";
-      control = true;
-    }
-  }while(control);
-
+  int columna = col;
+  int fila = row;
   if (punto == vr::FINAL)
   {
-    Malla_[fila - 1][columna - 1].setEstado(vr::FINAL);
-    EstadoFinal.first = fila - 1;
-    EstadoFinal.second = columna - 1;
+    Malla_[fila][columna].setEstado(vr::FINAL);
+    EstadoFinal.first = fila;
+    EstadoFinal.second = columna;
   }
   else
   {
 
-    Malla_[fila - 1][columna - 1].setEstado(vr::INICIAL);
-    EstadoInicial.first = fila - 1;
-    EstadoInicial.second = columna - 1;
+    Malla_[fila][columna].setEstado(vr::INICIAL);
+    EstadoInicial.first = fila;
+    EstadoInicial.second = columna;
   }
   mostrar(std::cout);
 }
@@ -134,9 +104,6 @@ Malla::Malla(const int& row, const int& column) : Malla_(row)
   mostrar(std::cout);
 
   ConstruirObstaculos();
-
-  ColocarPunto(vr::INICIAL);
-  ColocarPunto(vr::FINAL);
 }
 
 const int& Malla::getRow() const
@@ -176,8 +143,7 @@ void Malla::Control_Entrada(int x, int y)
   if (Malla_[i_][j_].getEstado() != vr::FINAL)
   {
     Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
-    Malla_[i_][j_].setEstado(vr::INICIAL);
-    EstadoInicial = std::make_pair(i_, j_);
+    ColocarPunto(vr::INICIAL, i_, j_);
   }
 }
 
@@ -188,8 +154,7 @@ void Malla::Control_Salida(int x, int y)
   if (Malla_[i_][j_].getEstado() != vr::INICIAL)
   {
     Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
-    Malla_[i_][j_].setEstado(vr::FINAL);
-    EstadoFinal = std::make_pair(i_, j_);
+    ColocarPunto(vr::FINAL, i_, j_);
   }
 }
 

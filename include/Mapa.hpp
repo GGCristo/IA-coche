@@ -26,7 +26,7 @@ class Malla
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
-    void ColocarPunto(const int&);
+    void ColocarPunto(const int&, int, int);
   public:
     Malla(const int& row, const int& column);
     const int& getRow() const;
