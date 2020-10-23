@@ -33,6 +33,8 @@ class Malla
     const int& getColumn() const;
     MATRIX& get_Mapa();
     void Click(int, int);
+    void Control_Entrada(int, int);
+    void Control_Salida(int, int);
     void ConstruirGrafo();
     const float CalcularTamanoCelda(const int& row, const int& column);
     std::ostream& mostrar(std::ostream&);

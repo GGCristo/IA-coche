@@ -42,7 +42,7 @@ int main()
   std::cout << "Tamaño ventanaX: " << window.getSize().x << '\n';
   std::cout << "Tamaño ventanaY: " << window.getSize().y << '\n';
 
-  while (window.isOpen())
+  while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -55,6 +55,29 @@ int main()
       if (event.type == sf::Event::MouseButtonPressed)
       {
         malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+      malla.Control_Entrada(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+    {
+      malla.Control_Salida(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+    }
+    window.clear();
+    malla.draw(window);
+    window.display();
+  }
+  while (window.isOpen())
+  {
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+      {
+        window.close();
       }
     }
     window.clear();
