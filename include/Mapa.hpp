@@ -18,20 +18,19 @@ class Malla
 {
   private:
     static int PorcentajeDeObstaculos;
-    friend class Grafo;
     MATRIX Malla_;
     int M_; // Filas
     int N_; // Columnas
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
-    float CalcularTamanoCelda(const int& row, const int& column);
+    float CalcularTamanoCelda() const;
     void ColocarPunto(const int&);
   public:
-    Malla(const int& row, const int& column);
+    Malla(int row, int column);
     const int& getRow() const;
     const int& getColumn() const;
-    const MATRIX& getMalla() const;
+    const MATRIX& getMalla();
     const std::pair<int, int>& getEstadoInicial() const;
     const std::pair<int, int>& getEstadoFinal() const;
     void Click(int, int);
@@ -39,9 +38,8 @@ class Malla
     void Control_Salida(int, int);
     void ConstruirGrafo();
     std::ostream& mostrar(std::ostream&);
+    const std::vector<Celda>& operator [](const int&);
 
     // Interfaz
     void draw(sf::RenderWindow& window);
 };
-
-

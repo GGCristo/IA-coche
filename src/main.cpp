@@ -8,7 +8,6 @@
 #include "../include/Texturas.hpp"
 
 int Malla::PorcentajeDeObstaculos = 10;
-const bool fullscreen = false;
 
 int main()
 {
@@ -36,15 +35,8 @@ int main()
   // Pongo el sleep porque el programa me detecta el enter de forma prematura
   sf::sleep(sf::seconds(0.5));
 
-  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE");
+  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
-  if (fullscreen)
-  {
-    window.create(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
-  }
-
-  std::cout << "Tamaño ventanaX: " << window.getSize().x << '\n';
-  std::cout << "Tamaño ventanaY: " << window.getSize().y << '\n';
 
   while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
   {
@@ -73,8 +65,11 @@ int main()
     malla.draw(window);
     window.display();
   }
-  std::cout << "El algoritmo empieza\n";
-  Coche coche(malla.getMalla()[0][0].getSize(), malla.getMalla()[malla.getEstadoInicial().first][malla.getEstadoInicial().second].getPosition());
+
+  const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
+                                    [malla.getEstadoInicial().second];
+  Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
+
   while (window.isOpen())
   {
     sf::Event event;

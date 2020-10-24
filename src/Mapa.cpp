@@ -83,13 +83,13 @@ void Malla::draw(sf::RenderWindow& window)
 
 }
 
-Malla::Malla(const int& row, const int& column) : Malla_(row)
+Malla::Malla(int row, int column) : Malla_(row)
 {
   M_ = row;
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Malla_[i].resize(N_, Celda(CalcularTamanoCelda(row, column)));
+    Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
@@ -171,14 +171,14 @@ void Malla::ConstruirGrafo()
 }
 
 // El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
-float Malla::CalcularTamanoCelda(const int& row, const int& column)
+float Malla::CalcularTamanoCelda() const
 {
-  auto anchura = sf::VideoMode::getDesktopMode().width / column;
-  auto altura  = sf::VideoMode::getDesktopMode().height / row;
+  auto anchura = sf::VideoMode::getDesktopMode().width / N_;
+  auto altura  = sf::VideoMode::getDesktopMode().height / M_;
   return (float)(std::min(anchura, altura));
 }
 
-const MATRIX& Malla::getMalla() const
+const MATRIX& Malla::getMalla()
 {
   return Malla_;
 }
@@ -224,4 +224,9 @@ std::ostream& Malla::mostrar(std::ostream& os)
   }
   os << '\n';
   return os;
+}
+
+const std::vector<Celda>& Malla::operator [](const int& pos)
+{
+  return Malla_[pos];
 }
