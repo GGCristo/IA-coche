@@ -169,6 +169,30 @@ void Malla::Click(int x, int y)
   std::cout << "He pinchado en: " << i_ << j_ << '\n';
 }
 
+void Malla::Control_Entrada(int x, int y)
+{
+  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
+  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  if (Malla_[i_][j_].getEstado() != vr::FINAL)
+  {
+    Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
+    Malla_[i_][j_].setEstado(vr::INICIAL);
+    EstadoInicial = std::make_pair(i_, j_);
+  }
+}
+
+void Malla::Control_Salida(int x, int y)
+{
+  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
+  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  if (Malla_[i_][j_].getEstado() != vr::INICIAL)
+  {
+    Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
+    Malla_[i_][j_].setEstado(vr::FINAL);
+    EstadoFinal = std::make_pair(i_, j_);
+  }
+}
+
 void Malla::ConstruirGrafo()
 {
 
