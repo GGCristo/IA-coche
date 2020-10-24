@@ -84,6 +84,11 @@ void Celda::setEstado(const int& estado)
   }
 }
 
+const sf::Vector2f& Celda::getPosition() const
+{
+  return celda.getPosition();
+}
+
 void Celda::setPosicion(const int& i, const int& j)
 {
   i_ = i;
@@ -98,7 +103,7 @@ void Celda::setPosicion(const int& i, const int& j)
   }
 }
 
-const sf::Vector2f& Celda::getSize()
+const sf::Vector2f& Celda::getSize() const
 {
   return celda.getSize();
 }

@@ -29,8 +29,9 @@ class Celda: public sf::Drawable
     void Ocupar();
     const int& getEstado() const;
     void setEstado(const int&);
+    const sf::Vector2f& getPosition() const;
     void setPosicion(const int& i, const int& j);
-    const sf::Vector2f& getSize();
+    const sf::Vector2f& getSize() const;
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

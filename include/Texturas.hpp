@@ -6,7 +6,7 @@
 struct Texturas
 {
   private:
-    std::array<sf::Texture, 4> texturas;
+    std::array<sf::Texture, 5> texturas;
     Texturas();
   public:
     static const sf::Texture& getTexturas(const int& = 0);

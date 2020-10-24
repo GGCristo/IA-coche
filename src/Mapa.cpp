@@ -18,39 +18,6 @@ void Malla::ConstruirObstaculos()
     }
     mostrar(std::cout);
   }
-  // else
-  // {
-  //   int columna;
-  //   int fila;
-  //   int otro;
-  //   do
-  //   {
-  //     std::cout << "Fila del obstaculo: ";
-  //     std::cin >> fila;
-  //     std::cout << "Columna del obstaculo ";
-  //     std::cin >> columna;
-  //     if (fila - 1 > getRow() || columna - 1 > getColumn())
-  //     {
-  //       std::cout << "La Fila o la Columna estan fuera de limite\n";
-  //       otro = 1;
-  //     }
-  //     else
-  //     {
-  //       if (Mapa_[fila - 1][columna - 1].getOcupacion())
-  //       {
-  //         std::cout << "Esa posición ya esta ocupada...\n";
-  //       }
-  //       else
-  //       {
-  //         Mapa_[fila - 1][columna - 1].Ocupar();
-  //         mostrar(std::cout);
-  //       }
-  //       std::cout << "¿Quiere poner otro obstaculo (Si[1];No[0])?: ";
-  //       std::cin >> otro;
-  //     }
-  //   }
-  //   while(otro);
-  // }
 }
 
 void Malla::ColocarPunto(const int& punto)
@@ -149,9 +116,14 @@ const int& Malla::getColumn() const
   return N_;
 }
 
-MATRIX& Malla::get_Mapa()
+const std::pair<int, int>& Malla::getEstadoInicial() const
 {
-  return Malla_;
+  return EstadoInicial;
+}
+
+const std::pair<int, int>& Malla::getEstadoFinal() const
+{
+  return EstadoFinal;
 }
 
 void Malla::Click(int x, int y)
@@ -199,11 +171,16 @@ void Malla::ConstruirGrafo()
 }
 
 // El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
-const float Malla::CalcularTamanoCelda(const int& row, const int& column)
+float Malla::CalcularTamanoCelda(const int& row, const int& column)
 {
   auto anchura = sf::VideoMode::getDesktopMode().width / column;
   auto altura  = sf::VideoMode::getDesktopMode().height / row;
   return (float)(std::min(anchura, altura));
+}
+
+const MATRIX& Malla::getMalla() const
+{
+  return Malla_;
 }
 
 std::ostream& Malla::mostrar(std::ostream& os)

@@ -1,9 +1,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Sleep.hpp>
 #include <iostream>
 #include "../include/Mapa.hpp"
 #include "../include/Celda.hpp"
-#include "../include/Grafo.hpp"
+#include "../include/Coche.hpp"
 #include "../include/Texturas.hpp"
 
 int Malla::PorcentajeDeObstaculos = 10;
@@ -31,6 +32,9 @@ int main()
   }
 
   Malla malla(row, column);
+
+  // Pongo el sleep porque el programa me detecta el enter de forma prematura
+  sf::sleep(sf::seconds(0.5));
 
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE");
   window.setFramerateLimit(15);
@@ -69,6 +73,8 @@ int main()
     malla.draw(window);
     window.display();
   }
+  std::cout << "El algoritmo empieza\n";
+  Coche coche(malla.getMalla()[0][0].getSize(), malla.getMalla()[malla.getEstadoInicial().first][malla.getEstadoInicial().second].getPosition());
   while (window.isOpen())
   {
     sf::Event event;
@@ -82,6 +88,7 @@ int main()
     }
     window.clear();
     malla.draw(window);
+    window.draw(coche);
     window.display();
   }
   return 0;
