@@ -25,7 +25,7 @@ class Malla
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
     float CalcularTamanoCelda() const;
-    void ColocarPunto(int);
+    void ColocarPunto(int punto, int row, int col);
   public:
     Malla(int row, int column);
     const int& getRow() const;

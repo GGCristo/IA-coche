@@ -20,13 +20,8 @@ void Malla::ConstruirObstaculos()
   }
 }
 
-<<<<<<< HEAD
-void Malla::ColocarPunto(const int& punto, int row, int col)
-=======
-void Malla::ColocarPunto(int punto)
->>>>>>> Cristo
+void Malla::ColocarPunto(int punto, int row, int col)
 {
-  bool control;
   int columna = col;
   int fila = row;
   if (punto == vr::FINAL)
