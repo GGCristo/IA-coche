@@ -2,6 +2,8 @@
 .vimspector.json
 .vscode/
 bin/
+build/
+Debug/
 .DS_Store
 CMakeLists.txt.user
 CMakeCache.txt
@@ -15,3 +17,4 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 tags
+.ccls-cache/

@@ -25,12 +25,11 @@ class Malla
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
     float CalcularTamanoCelda() const;
-    void ColocarPunto(const int&);
+    void ColocarPunto(int);
   public:
     Malla(int row, int column);
     const int& getRow() const;
     const int& getColumn() const;
-    const MATRIX& getMalla();
     const std::pair<int, int>& getEstadoInicial() const;
     const std::pair<int, int>& getEstadoFinal() const;
     void Click(int, int);
@@ -38,7 +37,7 @@ class Malla
     void Control_Salida(int, int);
     void ConstruirGrafo();
     std::ostream& mostrar(std::ostream&);
-    const std::vector<Celda>& operator [](const int&);
+    const std::vector<Celda>& operator [](int);
 
     // Interfaz
     void draw(sf::RenderWindow& window);

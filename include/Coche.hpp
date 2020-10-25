@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "Texturas.hpp"
+#include "variables.hpp"
 #include "Mapa.hpp"
 class Coche : public sf::Drawable
 {

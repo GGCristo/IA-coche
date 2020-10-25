@@ -5,7 +5,7 @@
 #include "../include/Texturas.hpp"
 #include "../include/variables.hpp"
 
-Celda::Celda(const float& tamano)
+Celda::Celda(float tamano)
 {
   i_ = -1;
   j_ = -1;
@@ -58,24 +58,24 @@ const int& Celda::getEstado() const
 }
 
 // TODO Comprobar si esta ordenado de más comun a menos comun
-void Celda::setEstado(const int& estado)
+void Celda::setEstado(int estado)
 {
   Estado_ = estado;
   if (Estado_ == vr::DEFAULT)
   {
-    celda.setTexture(&Texturas::getTexturas(0), true);
+    celda.setTexture(&Texturas::getTexturas(tx::GRASS), true);
   }
   else if (Estado_ == vr::INICIAL)
   {
-    celda.setTexture(&Texturas::getTexturas(2), true);
+    celda.setTexture(&Texturas::getTexturas(tx::ENTRADA), true);
   }
   else if (Estado_ == vr::OBSTACULO)
   {
-    celda.setTexture(&Texturas::getTexturas(1), true);
+    celda.setTexture(&Texturas::getTexturas(tx::BOX), true);
   }
   else if (Estado_ == vr::FINAL)
   {
-    celda.setTexture(&Texturas::getTexturas(3), true);
+    celda.setTexture(&Texturas::getTexturas(tx::SALIDA), true);
   }
   else
   {
@@ -89,16 +89,16 @@ const sf::Vector2f& Celda::getPosition() const
   return celda.getPosition();
 }
 
-void Celda::setPosicion(const int& i, const int& j)
+void Celda::setPosicion(int i, int j)
 {
   i_ = i;
   j_ = j;
 
   celda.setPosition((celda.getSize().y) * (float)j_,
                     (celda.getSize().x) * (float)i_);
-  for (int i = 0; i < 4; i++)
+  for (int z = 0; z < 4; z++)
   {
-    muros[i].setPosition(sf::Vector2f(celda.getPosition().x,
+    muros[z].setPosition(sf::Vector2f(celda.getPosition().x,
                                       celda.getPosition().y));
   }
 }

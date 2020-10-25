@@ -22,15 +22,15 @@ class Celda: public sf::Drawable
 
     void setPosition(const sf::Vector2f&);
   public:
-    explicit Celda(const float& tamano = 50.F);
+    explicit Celda(float tamano = 50.F);
     Celda(const Celda&);
     ~Celda() override;
     bool getOcupacion() const;
     void Ocupar();
     const int& getEstado() const;
-    void setEstado(const int&);
+    void setEstado(int);
     const sf::Vector2f& getPosition() const;
-    void setPosicion(const int& i, const int& j);
+    void setPosicion(int i,int j);
     const sf::Vector2f& getSize() const;
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

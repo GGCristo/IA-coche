@@ -20,7 +20,7 @@ void Malla::ConstruirObstaculos()
   }
 }
 
-void Malla::ColocarPunto(const int& punto)
+void Malla::ColocarPunto(int punto)
 {
   bool control;
   int columna;
@@ -165,22 +165,12 @@ void Malla::Control_Salida(int x, int y)
   }
 }
 
-void Malla::ConstruirGrafo()
-{
-
-}
-
 // El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
 float Malla::CalcularTamanoCelda() const
 {
   auto anchura = sf::VideoMode::getDesktopMode().width / N_;
   auto altura  = sf::VideoMode::getDesktopMode().height / M_;
   return (float)(std::min(anchura, altura));
-}
-
-const MATRIX& Malla::getMalla()
-{
-  return Malla_;
 }
 
 std::ostream& Malla::mostrar(std::ostream& os)
@@ -226,7 +216,7 @@ std::ostream& Malla::mostrar(std::ostream& os)
   return os;
 }
 
-const std::vector<Celda>& Malla::operator [](const int& pos)
+const std::vector<Celda>& Malla::operator [](int pos)
 {
   return Malla_[pos];
 }
