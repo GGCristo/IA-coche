@@ -38,7 +38,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
 
-  while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+  while (window.isOpen() && (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || !malla.SalidayEntrada()))
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -55,7 +55,7 @@ int main()
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
-      malla.Control_Entrada(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);    
+      malla.Control_Entrada(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
     {
@@ -67,7 +67,7 @@ int main()
   }
 
   const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
-                                    [malla.getEstadoInicial().second];
+    [malla.getEstadoInicial().second];
   Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
 
   while (window.isOpen())
@@ -76,7 +76,7 @@ int main()
     while (window.pollEvent(event))
     {
       if (event.type == sf::Event::Closed ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
       {
         window.close();
       }

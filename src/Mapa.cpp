@@ -26,13 +26,14 @@ void Malla::ColocarPunto(int punto, int row, int col)
   int fila = row;
   if (punto == vr::FINAL)
   {
+    haysalida = true;
     Malla_[fila][columna].setEstado(vr::FINAL);
     EstadoFinal.first = fila;
     EstadoFinal.second = columna;
   }
   else
   {
-
+    hayentrada = true;
     Malla_[fila][columna].setEstado(vr::INICIAL);
     EstadoInicial.first = fila;
     EstadoInicial.second = columna;
@@ -56,6 +57,8 @@ Malla::Malla(int row, int column) : Malla_(row)
 {
   M_ = row;
   N_ = column;
+  haysalida = false;
+  hayentrada = false;
   for (int i = 0; i < M_; i++)
   {
     Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
@@ -180,6 +183,10 @@ std::ostream& Malla::mostrar(std::ostream& os)
   return os;
 }
 
+bool Malla::SalidayEntrada()
+{
+  return (haysalida && hayentrada);
+}
 const std::vector<Celda>& Malla::operator [](int pos)
 {
   return Malla_[pos];
