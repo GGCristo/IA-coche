@@ -1,13 +1,13 @@
 #include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System/Sleep.hpp>
 #include <iostream>
 #include "../include/Mapa.hpp"
 #include "../include/Celda.hpp"
-#include "../include/Grafo.hpp"
+#include "../include/Coche.hpp"
 #include "../include/Texturas.hpp"
 
 int Malla::PorcentajeDeObstaculos = 10;
-const bool fullscreen = false;
 
 int main()
 {
@@ -32,15 +32,11 @@ int main()
 
   Malla malla(row, column);
 
-  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE");
-  window.setFramerateLimit(15);
-  if (fullscreen)
-  {
-    window.create(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
-  }
+  // Pongo el sleep porque el programa me detecta el enter de forma prematura
+  sf::sleep(sf::seconds(0.5));
 
-  std::cout << "Tamaño ventanaX: " << window.getSize().x << '\n';
-  std::cout << "Tamaño ventanaY: " << window.getSize().y << '\n';
+  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
+  window.setFramerateLimit(15);
 
   while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
   {
@@ -69,6 +65,11 @@ int main()
     malla.draw(window);
     window.display();
   }
+
+  const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
+                                    [malla.getEstadoInicial().second];
+  Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
+
   while (window.isOpen())
   {
     sf::Event event;
@@ -82,6 +83,7 @@ int main()
     }
     window.clear();
     malla.draw(window);
+    window.draw(coche);
     window.display();
   }
   return 0;

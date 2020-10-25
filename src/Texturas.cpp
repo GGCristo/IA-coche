@@ -19,6 +19,10 @@ Texturas::Texturas()
   {
     throw "Fallo al cargar la textura de la Salida";
   }
+  if (!texturas[4].loadFromFile("assets/Graphics/car.png"))
+  {
+    throw "Fallo al cargar la textura de el Coche";
+  }
 }
 
 const sf::Texture& Texturas::getTexturas(const int& i)

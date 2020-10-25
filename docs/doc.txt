@@ -15,6 +15,7 @@ ERRORES
 EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
 
 TODO
-Desde que cambie el origen las texturas no estan centradas.
-Mejorar el click, aceptar estados de inicio y fin
-Hacer que las celdas tengan tamaño dinamico con respecto a la ventana
+Trabajar en la función move del coche
+Cambiar estado inicial a travéz de una función Mapa.cpp 196
+Poner Instrucciones por consola para el usuario
+Arreglar posición cuando la pantalla se redimensiona

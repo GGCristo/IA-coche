@@ -18,42 +18,13 @@ void Malla::ConstruirObstaculos()
     }
     mostrar(std::cout);
   }
-  // else
-  // {
-  //   int columna;
-  //   int fila;
-  //   int otro;
-  //   do
-  //   {
-  //     std::cout << "Fila del obstaculo: ";
-  //     std::cin >> fila;
-  //     std::cout << "Columna del obstaculo ";
-  //     std::cin >> columna;
-  //     if (fila - 1 > getRow() || columna - 1 > getColumn())
-  //     {
-  //       std::cout << "La Fila o la Columna estan fuera de limite\n";
-  //       otro = 1;
-  //     }
-  //     else
-  //     {
-  //       if (Mapa_[fila - 1][columna - 1].getOcupacion())
-  //       {
-  //         std::cout << "Esa posición ya esta ocupada...\n";
-  //       }
-  //       else
-  //       {
-  //         Mapa_[fila - 1][columna - 1].Ocupar();
-  //         mostrar(std::cout);
-  //       }
-  //       std::cout << "¿Quiere poner otro obstaculo (Si[1];No[0])?: ";
-  //       std::cin >> otro;
-  //     }
-  //   }
-  //   while(otro);
-  // }
 }
 
+<<<<<<< HEAD
 void Malla::ColocarPunto(const int& punto, int row, int col)
+=======
+void Malla::ColocarPunto(int punto)
+>>>>>>> Cristo
 {
   bool control;
   int columna = col;
@@ -86,13 +57,13 @@ void Malla::draw(sf::RenderWindow& window)
 
 }
 
-Malla::Malla(const int& row, const int& column) : Malla_(row)
+Malla::Malla(int row, int column) : Malla_(row)
 {
   M_ = row;
   N_ = column;
   for (int i = 0; i < M_; i++)
   {
-    Malla_[i].resize(N_, Celda(CalcularTamanoCelda(row, column)));
+    Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
     // El contenedor ya esta dimensionado pero necesito que cada celda
     // sea conciente de su posición.
     for (int j = 0; j < N_; j++)
@@ -116,9 +87,14 @@ const int& Malla::getColumn() const
   return N_;
 }
 
-MATRIX& Malla::get_Mapa()
+const std::pair<int, int>& Malla::getEstadoInicial() const
 {
-  return Malla_;
+  return EstadoInicial;
+}
+
+const std::pair<int, int>& Malla::getEstadoFinal() const
+{
+  return EstadoFinal;
 }
 
 void Malla::Click(int x, int y)
@@ -158,16 +134,11 @@ void Malla::Control_Salida(int x, int y)
   }
 }
 
-void Malla::ConstruirGrafo()
-{
-
-}
-
 // El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
-const float Malla::CalcularTamanoCelda(const int& row, const int& column)
+float Malla::CalcularTamanoCelda() const
 {
-  auto anchura = sf::VideoMode::getDesktopMode().width / column;
-  auto altura  = sf::VideoMode::getDesktopMode().height / row;
+  auto anchura = sf::VideoMode::getDesktopMode().width / N_;
+  auto altura  = sf::VideoMode::getDesktopMode().height / M_;
   return (float)(std::min(anchura, altura));
 }
 
@@ -212,4 +183,9 @@ std::ostream& Malla::mostrar(std::ostream& os)
   }
   os << '\n';
   return os;
+}
+
+const std::vector<Celda>& Malla::operator [](int pos)
+{
+  return Malla_[pos];
 }

@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "../include/random.hpp" // Libreria ajena (https://github.com/effolkronium/random)
+#include "random.hpp" // Libreria ajena (https://github.com/effolkronium/random)
 
 // get base random alias which is auto seeded and has static API and internal state
 using Random = effolkronium::random_static;
@@ -18,26 +18,26 @@ class Malla
 {
   private:
     static int PorcentajeDeObstaculos;
-    friend class Grafo;
     MATRIX Malla_;
     int M_; // Filas
     int N_; // Columnas
-    // TODO Necesito esto?
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
-    void ColocarPunto(const int&, int, int);
+    float CalcularTamanoCelda() const;
+    void ColocarPunto(int);
   public:
-    Malla(const int& row, const int& column);
+    Malla(int row, int column);
     const int& getRow() const;
     const int& getColumn() const;
-    MATRIX& get_Mapa();
+    const std::pair<int, int>& getEstadoInicial() const;
+    const std::pair<int, int>& getEstadoFinal() const;
     void Click(int, int);
     void Control_Entrada(int, int);
     void Control_Salida(int, int);
     void ConstruirGrafo();
-    const float CalcularTamanoCelda(const int& row, const int& column);
     std::ostream& mostrar(std::ostream&);
+    const std::vector<Celda>& operator [](int);
 
     // Interfaz
     void draw(sf::RenderWindow& window);
