@@ -38,7 +38,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
 
-  while (window.isOpen() && (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || !malla.SalidayEntrada()))
+  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.SalidayEntrada()))
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -67,7 +67,7 @@ int main()
   }
 
   const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
-    [malla.getEstadoInicial().second];
+                                    [malla.getEstadoInicial().second];
   Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
 
   while (window.isOpen())

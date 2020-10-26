@@ -16,6 +16,4 @@ EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
 
 TODO
 Trabajar en la función move del coche
-Poner Instrucciones por consola para el usuario
-Arreglar posición cuando la pantalla se redimensiona
 Intentar ver si hay una forma mas sencilla sin los atributos haysalida y hayentrada
