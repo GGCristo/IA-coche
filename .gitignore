@@ -18,3 +18,5 @@ CTestTestfile.cmake
 _deps
 tags
 .ccls-cache/
+/.clangd/
+/.tasks
