@@ -10,9 +10,6 @@ class Celda: public sf::Drawable
   private:
     int i_;
     int j_;
-    // TODO Solucionar problema serio de diseño, en un principio -1 es que no
-    // ha sido tratado por el algoritmo, pero también es cuando la celda es
-    // habitable.
     int Estado_;
     bool EFinal_;
 

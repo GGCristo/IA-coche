@@ -23,6 +23,10 @@ Texturas::Texturas()
   {
     throw "Fallo al cargar la textura de el Coche";
   }
+  if (!texturas[5].loadFromFile("assets/Graphics/Wall.jpg"))
+  {
+    throw "Fallo al cargar la textura de los muros";
+  }
 }
 
 const sf::Texture& Texturas::getTexturas(const int& i)

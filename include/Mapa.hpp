@@ -26,6 +26,7 @@ class Malla
     void ConstruirObstaculos();
     float CalcularTamanoCelda() const;
     void ColocarPunto(int punto, int row, int col);
+    void Levantar_muros();
   public:
     Malla(int row, int column);
     const int& getRow() const;
