@@ -66,11 +66,13 @@ int main()
     window.display();
   }
 
-  const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
+  // No me crees el coche si la ventana se ha cerrado
+  if (window.isOpen())
+  {
+    const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
                                     [malla.getEstadoInicial().second];
-  Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
-
-  while (window.isOpen())
+    Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
+    while (window.isOpen())
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -86,5 +88,7 @@ int main()
     window.draw(coche);
     window.display();
   }
+  }
+
   return 0;
 }

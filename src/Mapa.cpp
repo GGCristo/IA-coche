@@ -14,7 +14,7 @@ void Malla::ConstruirObstaculos()
   {
     for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/100.0); i++)
     {
-      Malla_[Random::get(0, M_ - 1)][Random::get(0, N_ - 1)].Ocupar();
+      Malla_[Random::get(1, M_ - 2)][Random::get(1, N_ - 2)].Ocupar();
     }
     mostrar(std::cout);
   }
@@ -22,21 +22,31 @@ void Malla::ConstruirObstaculos()
 
 void Malla::ColocarPunto(int punto, int row, int col)
 {
-  int columna = col;
-  int fila = row;
   if (punto == vr::FINAL)
   {
-    Malla_[fila][columna].setEstado(vr::FINAL);
-    EstadoFinal.first = fila;
-    EstadoFinal.second = columna;
+    Malla_[row][col].setEstado(vr::FINAL);
+    EstadoFinal.first = row; EstadoFinal.second = col;
   }
   else
   {
-    Malla_[fila][columna].setEstado(vr::INICIAL);
-    EstadoInicial.first = fila;
-    EstadoInicial.second = columna;
+    Malla_[row][col].setEstado(vr::INICIAL);
+    EstadoInicial.first = row; EstadoInicial.second = col;
   }
   mostrar(std::cout);
+}
+
+void Malla::Levantar_muros()
+{
+  for (int i = 0; i < M_; i++)
+  {
+    Malla_[i][0].setEstado(vr::MURO);
+    Malla_[i][M_ - 1].setEstado(vr::MURO);
+  }
+  for (int i = 0; i < N_; i++)
+  {
+    Malla_[0][i].setEstado(vr::MURO);
+    Malla_[N_ - 1][i].setEstado(vr::MURO);
+  }
 }
 
 void Malla::draw(sf::RenderWindow& window)
@@ -51,14 +61,12 @@ void Malla::draw(sf::RenderWindow& window)
 
 }
 
-Malla::Malla(int row, int column) : Malla_(row)
+Malla::Malla(int row, int column) : Malla_(row + 2)
 {
-  M_ = row;
-  N_ = column;
-  EstadoInicial.first = -1;
-  EstadoInicial.second = -1;
-  EstadoFinal.first = -1;
-  EstadoFinal.second = -1;
+  M_ = row + 2;
+  N_ = column + 2;
+  EstadoInicial.first = -1; EstadoInicial.second = -1;
+  EstadoFinal.first = -1; EstadoFinal.second = -1;
   for (int i = 0; i < M_; i++)
   {
     Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
@@ -69,6 +77,8 @@ Malla::Malla(int row, int column) : Malla_(row)
       Malla_[i][j].setPosicion(i, j);
     }
   }
+
+  Levantar_muros();
 
   mostrar(std::cout);
 
@@ -99,13 +109,16 @@ void Malla::Click(int x, int y)
 {
   int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  if (Malla_[i_][j_].getOcupacion())
+  if (Malla_[i_][j_].getEstado() != vr::MURO)
   {
-    Malla_[i_][j_].setEstado(vr::DEFAULT);
-  }
-  else if (Malla_[i_][j_].getEstado() == vr::DEFAULT)
-  {
-    Malla_[i_][j_].setEstado(vr::OBSTACULO);
+    if (Malla_[i_][j_].getOcupacion())
+    {
+      Malla_[i_][j_].setEstado(vr::DEFAULT);
+    }
+    else if (Malla_[i_][j_].getEstado() == vr::DEFAULT)
+    {
+      Malla_[i_][j_].setEstado(vr::OBSTACULO);
+    }
   }
   std::cout << "He pinchado en: " << i_ << j_ << '\n';
 }
@@ -114,10 +127,10 @@ void Malla::Control_Entrada(int x, int y)
 {
   int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  if (Malla_[i_][j_].getEstado() != vr::FINAL)
+  if (Malla_[i_][j_].getEstado() != vr::FINAL &&
+      Malla_[i_][j_].getEstado() != vr::MURO)
   {
-    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
-        EstadoFinal.first >= 0 && EstadoFinal.second >= 0)
+    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0)
     {
       Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
     }
@@ -129,10 +142,10 @@ void Malla::Control_Salida(int x, int y)
 {
   int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  if (Malla_[i_][j_].getEstado() != vr::INICIAL)
+  if (Malla_[i_][j_].getEstado() != vr::INICIAL &&
+      Malla_[i_][j_].getEstado() != vr::MURO)
   {
-    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
-        EstadoFinal.first >= 0 && EstadoInicial.second >=  0)
+    if (EstadoFinal.first >= 0 && EstadoFinal.second >=  0)
     {
       Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
     }
@@ -161,13 +174,17 @@ std::ostream& Malla::mostrar(std::ostream& os)
     os << "|";
     for (int j = 0; j < N_; j++)
     {
-      if (Malla_[i][j].getEstado() == vr::OBSTACULO)
+      if (Malla_[i][j].getEstado() == vr::DEFAULT)
+      {
+        os << ' ';
+      }
+      else if (Malla_[i][j].getEstado() == vr::OBSTACULO)
       {
         os << 'x';
       }
-      else if (Malla_[i][j].getEstado() == vr::DEFAULT)
+      else if (Malla_[i][j].getEstado() == vr::MURO)
       {
-        os << ' ';
+        os << 'M';
       }
       else if (Malla_[i][j].getEstado() == vr::INICIAL)
       {
@@ -194,7 +211,7 @@ std::ostream& Malla::mostrar(std::ostream& os)
 bool Malla::haySalidayEntrada() const
 {
   return (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
-          EstadoFinal.first >= 0 && EstadoFinal.second >= 0);
+      EstadoFinal.first >= 0 && EstadoFinal.second >= 0);
 }
 
 const std::vector<Celda>& Malla::operator [](int pos) const

@@ -48,7 +48,7 @@ Celda::~Celda()
 
 bool Celda::getOcupacion() const
 {
-  return (Estado_ == vr::OBSTACULO);
+  return (Estado_ == vr::OBSTACULO || Estado_ == vr::MURO);
 }
 
 void Celda::Ocupar()
@@ -61,7 +61,6 @@ const int& Celda::getEstado() const
   return Estado_;
 }
 
-// TODO Comprobar si esta ordenado de más comun a menos comun
 void Celda::setEstado(int estado)
 {
   Estado_ = estado;
@@ -69,13 +68,17 @@ void Celda::setEstado(int estado)
   {
     celda.setTexture(&Texturas::getTexturas(tx::GRASS), true);
   }
-  else if (Estado_ == vr::INICIAL)
-  {
-    celda.setTexture(&Texturas::getTexturas(tx::ENTRADA), true);
-  }
   else if (Estado_ == vr::OBSTACULO)
   {
     celda.setTexture(&Texturas::getTexturas(tx::BOX), true);
+  }
+  else if (Estado_ == vr::MURO)
+  {
+    celda.setTexture(&Texturas::getTexturas(tx::WALL), true);
+  }
+  else if (Estado_ == vr::INICIAL)
+  {
+    celda.setTexture(&Texturas::getTexturas(tx::ENTRADA), true);
   }
   else if (Estado_ == vr::FINAL)
   {
