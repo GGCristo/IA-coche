@@ -38,7 +38,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
 
-  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.SalidayEntrada()))
+  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.haySalidayEntrada()))
   {
     sf::Event event;
     while (window.pollEvent(event))

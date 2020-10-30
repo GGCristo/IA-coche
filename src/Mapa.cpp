@@ -26,14 +26,12 @@ void Malla::ColocarPunto(int punto, int row, int col)
   int fila = row;
   if (punto == vr::FINAL)
   {
-    haysalida = true;
     Malla_[fila][columna].setEstado(vr::FINAL);
     EstadoFinal.first = fila;
     EstadoFinal.second = columna;
   }
   else
   {
-    hayentrada = true;
     Malla_[fila][columna].setEstado(vr::INICIAL);
     EstadoInicial.first = fila;
     EstadoInicial.second = columna;
@@ -57,8 +55,10 @@ Malla::Malla(int row, int column) : Malla_(row)
 {
   M_ = row;
   N_ = column;
-  haysalida = false;
-  hayentrada = false;
+  EstadoInicial.first = -1;
+  EstadoInicial.second = -1;
+  EstadoFinal.first = -1;
+  EstadoFinal.second = -1;
   for (int i = 0; i < M_; i++)
   {
     Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
@@ -116,7 +116,11 @@ void Malla::Control_Entrada(int x, int y)
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
   if (Malla_[i_][j_].getEstado() != vr::FINAL)
   {
-    Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
+    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
+        EstadoFinal.first >= 0 && EstadoFinal.second >= 0)
+    {
+      Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
+    }
     ColocarPunto(vr::INICIAL, i_, j_);
   }
 }
@@ -127,7 +131,11 @@ void Malla::Control_Salida(int x, int y)
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
   if (Malla_[i_][j_].getEstado() != vr::INICIAL)
   {
-    Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
+    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
+        EstadoFinal.first >= 0 && EstadoInicial.second >=  0)
+    {
+      Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
+    }
     ColocarPunto(vr::FINAL, i_, j_);
   }
 }
@@ -183,11 +191,18 @@ std::ostream& Malla::mostrar(std::ostream& os)
   return os;
 }
 
-bool Malla::SalidayEntrada()
+bool Malla::haySalidayEntrada() const
 {
-  return (haysalida && hayentrada);
+  return (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
+          EstadoFinal.first >= 0 && EstadoFinal.second >= 0);
 }
-const std::vector<Celda>& Malla::operator [](int pos)
+
+const std::vector<Celda>& Malla::operator [](int pos) const
+{
+  return Malla_[pos];
+}
+
+std::vector<Celda>& Malla::operator [](int pos)
 {
   return Malla_[pos];
 }

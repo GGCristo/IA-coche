@@ -19,7 +19,9 @@ Celda::Celda(float tamano)
   muros[3].setSize(sf::Vector2f(tamano / acortamiento, tamano));
 
   for (int i = 0; i < 4; i++)
+  {
     muros[i].setFillColor(sf::Color::Black);
+  }
 }
 
 Celda::Celda(const Celda& celda2)
@@ -35,7 +37,9 @@ Celda::Celda(const Celda& celda2)
   }
 
   for (int i = 0; i < 4; i++)
+  {
     muros[i].setFillColor(celda2.muros[i].getFillColor());
+  }
 }
 
 Celda::~Celda()
@@ -112,5 +116,7 @@ void Celda::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   target.draw(celda);
   for (int i = 0; i < 4; i++)
+  {
     target.draw(muros[i]);
+  }
 }
