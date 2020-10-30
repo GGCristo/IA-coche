@@ -40,12 +40,12 @@ void Malla::Levantar_muros()
   for (int i = 0; i < M_; i++)
   {
     Malla_[i][0].setEstado(vr::MURO);
-    Malla_[i][M_ - 1].setEstado(vr::MURO);
+    Malla_[i][N_ - 1].setEstado(vr::MURO);
   }
   for (int i = 0; i < N_; i++)
   {
     Malla_[0][i].setEstado(vr::MURO);
-    Malla_[N_ - 1][i].setEstado(vr::MURO);
+    Malla_[M_ - 1][i].setEstado(vr::MURO);
   }
 }
 
