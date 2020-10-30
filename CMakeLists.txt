@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION "3.9.2")
 project(IA-Coche)
 
 set(SOURCES
-  src/Mapa.cpp
+  src/Malla.cpp
   src/Celda.cpp
   src/Texturas.cpp
   src/Coche.cpp
