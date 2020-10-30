@@ -16,4 +16,3 @@ EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
 
 TODO
 Trabajar en la función move del coche
-Intentar ver si hay una forma mas sencilla sin los atributos haysalida y hayentrada

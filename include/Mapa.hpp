@@ -21,8 +21,6 @@ class Malla
     MATRIX Malla_;
     int M_; // Filas
     int N_; // Columnas
-    bool haysalida;
-    bool hayentrada;
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
     void ConstruirObstaculos();
@@ -38,9 +36,10 @@ class Malla
     void Control_Entrada(int, int);
     void Control_Salida(int, int);
     void ConstruirGrafo();
-    bool SalidayEntrada();
+    bool haySalidayEntrada() const;
     std::ostream& mostrar(std::ostream&);
-    const std::vector<Celda>& operator [](int);
+    const std::vector<Celda>& operator [](int) const;
+    std::vector<Celda>& operator [](int);
 
     // Interfaz
     void draw(sf::RenderWindow& window);
