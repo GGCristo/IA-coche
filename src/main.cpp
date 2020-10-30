@@ -2,7 +2,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <iostream>
-#include "../include/Mapa.hpp"
+#include "../include/Malla.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Coche.hpp"
 #include "../include/Texturas.hpp"

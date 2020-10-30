@@ -1,4 +1,4 @@
-#include "../include/Mapa.hpp"
+#include "../include/Malla.hpp"
 #include "../include/variables.hpp"
 
 void Malla::ConstruirObstaculos()
