@@ -13,6 +13,7 @@ ERRORES
 2 = El estado no existe
 
 EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
+EFinal_ no se usa nunca
 
 TODO
 Trabajar en la función move del coche
