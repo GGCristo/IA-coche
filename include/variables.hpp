@@ -18,3 +18,11 @@ namespace tx
   constexpr static int COCHE = 4;
   constexpr static int WALL = 5;
 }
+
+namespace cr
+{
+  constexpr static int NORTE = 1;
+  constexpr static int SUR = -1;
+  constexpr static int ESTE = 2;
+  constexpr static int OESTE = 3;
+}
