@@ -83,6 +83,15 @@ int main()
         window.close();
       }
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+      coche.Move(3);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+      coche.Move(2);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+      coche.Move(1);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+      coche.Move(-1);
+    } 
     window.clear();
     malla.draw(window);
     window.draw(coche);
