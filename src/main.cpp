@@ -9,6 +9,52 @@
 
 int Malla::PorcentajeDeObstaculos = 10;
 
+/**
+ * @brief Bucle para que el usuario cree las condiciones iniciales del "tablero"
+ *
+ * @param window ventana para hacer el proceso interactivo
+ * @param malla Guarda los cambios en la malla, para poder trabajar con los datos
+ */
+void modificarTerreno(sf::RenderWindow& window, Malla& malla);
+
+/**
+ * @brief Muestra el resultado del algoritmo
+ *
+ * @param window Muestralo a travez de esta ventana
+ * @param malla Malla donde se va a mover el coche que vamos a crear dentro
+ */
+void main_loop(sf::RenderWindow& window, Malla& malla)
+{
+  const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
+    [malla.getEstadoInicial().second];
+  Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
+  while (window.isOpen())
+  {
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed ||
+          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+      {
+        window.close();
+      }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+      coche.Move(3);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+      coche.Move(2);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+      coche.Move(1);
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+      coche.Move(-1);
+    }
+    window.clear();
+    malla.draw(window);
+    window.draw(coche);
+    window.display();
+  }
+}
+
 int main()
 {
   std::cout << "Introduzca el numero de filas" << '\n';
@@ -38,6 +84,19 @@ int main()
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
 
+  modificarTerreno(window, malla);
+
+  // Si el usuario cerro la ventana, cierra la aplicación
+  if (window.isOpen())
+  {
+    main_loop(window, malla);
+  }
+
+  return 0;
+}
+
+void modificarTerreno(sf::RenderWindow& window, Malla& malla)
+{
   while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.haySalidayEntrada()))
   {
     sf::Event event;
@@ -65,39 +124,4 @@ int main()
     malla.draw(window);
     window.display();
   }
-
-  // No me crees el coche si la ventana se ha cerrado
-  if (window.isOpen())
-  {
-    const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
-                                    [malla.getEstadoInicial().second];
-    Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
-    while (window.isOpen())
-  {
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-      if (event.type == sf::Event::Closed ||
-          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-      {
-        window.close();
-      }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-      coche.Move(3);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-      coche.Move(2);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-      coche.Move(1);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-      coche.Move(-1);
-    } 
-    window.clear();
-    malla.draw(window);
-    window.draw(coche);
-    window.display();
-  }
-  }
-
-  return 0;
 }
