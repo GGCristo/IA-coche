@@ -58,7 +58,6 @@ void Malla::draw(sf::RenderWindow& window)
       window.draw(Malla_[i][j]);
     }
   }
-
 }
 
 Malla::Malla(int row, int column) : Malla_(row + 2)

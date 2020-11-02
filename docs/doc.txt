@@ -16,4 +16,10 @@ EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
 EFinal_ no se usa nunca
 
 TODO
-Trabajar en la función move del coche
+Poner rotación en la función move
+Instrucciones para el usuario
+Poner animaciones en la función move
+Arreglar porcentajes de obstaculos (si el numero aleatorio cae en una celda que ya
+es una caja vuelve a intentarlo) (ten cuidado con porcentajes altos, que pueden llevar tiempo)
+Termina de documentar
+Leer estructura de la malla por fichero

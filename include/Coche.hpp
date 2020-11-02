@@ -6,6 +6,7 @@
 #include "Texturas.hpp"
 #include "variables.hpp"
 #include "Malla.hpp"
+
 class Coche : public sf::Drawable
 {
   private:
