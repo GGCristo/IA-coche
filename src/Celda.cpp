@@ -53,6 +53,11 @@ bool Celda::getOcupacion() const
 
 void Celda::Ocupar()
 {
+  if (Estado_ == vr::OBSTACULO)
+  {
+    std::cout << "Intentando ocupar un muro\n";
+    assert(true);
+  }
   setEstado(vr::OBSTACULO);
 }
 

@@ -12,9 +12,19 @@ void Malla::ConstruirObstaculos()
 
   if (opcion == 1)
   {
-    for (int i = 0; i < M_ * N_ * (PorcentajeDeObstaculos/100.0); i++)
+    std::vector<int> lista;
+    lista.resize((M_ - 2) * (N_ - 2));
+    for (int i = 0; i < lista.size(); i++)
     {
-      Malla_[Random::get(1, M_ - 2)][Random::get(1, N_ - 2)].Ocupar();
+      lista[i] = i;
+    }
+    for (int i = 0; i < (M_ - 2) * (N_ - 2) * (PorcentajeDeObstaculos/100.0); i++)
+    {
+      auto randomIt = Random::get(lista);
+      auto row = *randomIt/(N_ - 2);
+      auto col = *randomIt - row*(N_ - 2);
+      lista.erase(randomIt);
+      Malla_[row + 1][col + 1].Ocupar();
     }
     mostrar(std::cout);
   }
