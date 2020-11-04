@@ -23,9 +23,33 @@ class Malla
     int N_; // Columnas
     std::pair<int, int> EstadoInicial;
     std::pair<int, int> EstadoFinal;
+    /**
+     * @brief Poner obstaculos aleatorios por la malla
+     *        Se crea una lista de números y se van sacando números aleatorios
+     *        esto se hace para asegurarnos que se rellena la cantidad exacta
+     *
+     */
     void ConstruirObstaculos();
+    /**
+     * @brief Devolvemos el tamaño de las celdas, acorde al tamaño de la malla
+     *        Esto se consigue con una división básica y devolviendo el valor
+     *        mínimo de la anchura y altura pues la celda tiene que ser cuadrada
+     *
+     * @return [TODO:description]
+     */
     float CalcularTamanoCelda() const;
+    /**
+     * @brief Coloca el punto Final o Inicial en su respectiva posición
+     *
+     * @param punto vr::FINAL o vr::INICIAL
+     * @param row indice de la fila
+     * @param col indice de la columna
+     */
     void ColocarPunto(int punto, int row, int col);
+    /**
+     * @brief Coloca los muros que rodean la malla
+     *
+     */
     void Levantar_muros();
   public:
     Malla(int row, int column);
