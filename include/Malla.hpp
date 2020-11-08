@@ -51,8 +51,9 @@ class Malla
      *
      */
     void Levantar_muros();
+    Malla();
   public:
-    Malla(int row, int column);
+    static Malla& get_instance();
     const int& getRow() const;
     const int& getColumn() const;
     const std::pair<int, int>& getEstadoInicial() const;

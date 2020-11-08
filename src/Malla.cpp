@@ -70,12 +70,19 @@ void Malla::draw(sf::RenderWindow& window)
   }
 }
 
-Malla::Malla(int row, int column) : Malla_(row + 2)
+Malla::Malla()
 {
+  std::cout << "Introduzca el numero de filas" << '\n';
+  int row;
+  std::cin >> row;
+  std::cout << "Introduzca el numero de columnas" << '\n';
+  int column;
+  std::cin >> column;
   M_ = row + 2;
   N_ = column + 2;
   EstadoInicial.first = -1; EstadoInicial.second = -1;
   EstadoFinal.first = -1; EstadoFinal.second = -1;
+  Malla_.resize(row + 2);
   for (int i = 0; i < M_; i++)
   {
     Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
@@ -92,6 +99,12 @@ Malla::Malla(int row, int column) : Malla_(row + 2)
   mostrar(std::cout);
 
   ConstruirObstaculos();
+}
+
+Malla& Malla::get_instance()
+{
+  static Malla instance;
+  return instance;
 }
 
 const int& Malla::getRow() const

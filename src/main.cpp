@@ -55,14 +55,9 @@ void main_loop(sf::RenderWindow& window, Malla& malla)
   }
 }
 
+
 int main()
 {
-  std::cout << "Introduzca el numero de filas" << '\n';
-  int row;
-  std::cin >> row;
-  std::cout << "Introduzca el numero de columnas" << '\n';
-  int column;
-  std::cin >> column;
 
   // Inicializo las texturas para que en caso de que no
   // cargen el programa cierre de forma segura
@@ -76,20 +71,20 @@ int main()
     return 1;
   }
 
-  Malla malla(row, column);
-
-  // Pongo el sleep porque el programa me detecta el enter de forma prematura
-  sf::sleep(sf::seconds(0.5));
+  Malla::get_instance();
 
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
 
-  modificarTerreno(window, malla);
+  modificarTerreno(window, Malla::get_instance());
+
+  // Pongo el sleep porque el programa me detecta el enter de forma prematura
+  sf::sleep(sf::seconds(0.5));
 
   // Si el usuario cerro la ventana, cierra la aplicación
   if (window.isOpen())
   {
-    main_loop(window, malla);
+    main_loop(window, Malla::get_instance());
   }
 
   return 0;
