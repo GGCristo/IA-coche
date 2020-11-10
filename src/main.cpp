@@ -68,12 +68,12 @@ int main(int argc, char* argv[])
     std::cout << "El Input.txt debe ser el fichero de entrada en el que se encuentran las posiciones" << std::endl;
     return 0;
   }
-  else if (argc > 2)
+  if (argc > 2)
   {
     std::cout << "Para ver la ayuda ponga: ./bin/main --help" << std::endl;
     return 1;
   }
-  else if (argc == 2 && std::string(argv[1]) != "--help")
+  if (argc == 2 && std::string(argv[1]) != "--help")
   {
     std::string nombre_fichero_entrada = argv[1];
     std::string linea_fichero;
@@ -88,8 +88,10 @@ int main(int argc, char* argv[])
     while (Malla::fichero_.good())
     {
       getline(Malla::fichero_, linea_fichero);
-      if (linea_fichero.size() != 0)
+      if (!linea_fichero.empty())
+      {
         numero_lineas_fichero++;
+      }
     }
 
     if (numero_lineas_fichero < 4)
