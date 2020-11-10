@@ -9,6 +9,7 @@ Celda::Celda(float tamano)
 {
   i_ = -1;
   j_ = -1;
+  retorno_ = nullptr;
   setEstado(vr::DEFAULT);
   celda.setSize(sf::Vector2f(tamano, tamano));
 
@@ -28,6 +29,7 @@ Celda::Celda(const Celda& celda2)
 {
   i_ = celda2.i_;
   j_ = celda2.j_;
+  retorno_ = celda2.retorno_;
   setEstado(celda2.Estado_);
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
 
@@ -59,6 +61,26 @@ void Celda::Ocupar()
     assert(true);
   }
   setEstado(vr::OBSTACULO);
+}
+
+const int Celda::get_i()
+{
+  return i_;
+}
+
+const int Celda::get_j()
+{
+  return j_;
+}
+
+void Celda::setRetorno(Celda* celda)
+{
+  retorno_ = celda;
+}
+
+const Celda* Celda::getRetorno()
+{
+  return retorno_;
 }
 
 const int& Celda::getEstado() const

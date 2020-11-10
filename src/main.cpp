@@ -1,10 +1,13 @@
 #include <SFML/Window.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Sleep.hpp>
+#include <iostream>
+#include <queue>
 #include "../include/Malla.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Coche.hpp"
 #include "../include/Texturas.hpp"
+#include "../include//algoritmos.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -18,7 +21,7 @@ std::ifstream Malla::fichero_;
  * @param window ventana para hacer el proceso interactivo
  * @param malla Guarda los cambios en la malla, para poder trabajar con los datos
  */
-void modificarTerreno(sf::RenderWindow& window, Malla& malla);
+static void modificarTerreno(sf::RenderWindow& window, Malla& malla);
 
 /**
  * @brief Muestra el resultado del algoritmo
@@ -124,14 +127,17 @@ int main(int argc, char* argv[])
   window.setFramerateLimit(15);
 
   modificarTerreno(window, Malla::get_instance());
-
   // Pongo el sleep porque el programa me detecta el enter de forma prematura
   sf::sleep(sf::seconds(0.5));
 
   // Si el usuario cerro la ventana, cierra la aplicación
   if (window.isOpen())
   {
-    main_loop(window, Malla::get_instance());
+    std::queue<Celda*> visitados;
+    std::deque<Celda*> procesados;
+    std::cout << "Indices de Estado inicial " << Malla::get_instance().getEstadoInicial().first << " " << Malla::get_instance().getEstadoInicial().second << '\n';
+    ElMejor(Malla::get_instance()[Malla::get_instance().getEstadoInicial().first][Malla::get_instance().getEstadoInicial().second], visitados, procesados);
+    // main_loop(window, Malla::get_instance());
   }
   return 0;
 }

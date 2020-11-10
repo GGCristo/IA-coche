@@ -29,7 +29,6 @@ void Coche::Move(int coordenada) {
   else if (coordenada == cr::ESTE)
   {
     std::cout << "Se desplaza al Este" << std::endl;
-    coche.setPosition(coche.getPosition().x, coche.getPosition().y);
     coche.move(desplazamiento_.x,0.F);
     sf::sleep(sf::seconds(0.25));
   }

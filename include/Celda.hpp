@@ -15,7 +15,8 @@ class Celda: public sf::Drawable
     int i_;
     int j_;
     int Estado_;
-    bool EFinal_;
+    Celda* retorno_;
+    // bool EFinal_;
 
     // Interfaz
     /**
@@ -56,6 +57,10 @@ class Celda: public sf::Drawable
      *
      */
     void Ocupar();
+    const int get_i();
+    const int get_j();
+    void setRetorno(Celda*);
+    const Celda* getRetorno();
     /**
      * @brief Devuelve el "Estado_" en el que se encuentra la celda
      *

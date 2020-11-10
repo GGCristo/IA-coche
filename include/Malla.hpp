@@ -58,6 +58,8 @@ class Malla
 
     static Malla& get_instance();
     void EstablecesFilasyColumnas();
+    Malla(const Malla&) = delete;
+    Malla& operator = (const Malla&) = delete;
     const int& getRow() const;
     const int& getColumn() const;
     const std::pair<int, int>& getEstadoInicial() const;
