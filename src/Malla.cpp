@@ -183,7 +183,6 @@ void Malla::Click(int x, int y)
 
 void Malla::Control_Entrada_Pixel(int x, int y)
 {
-  std::cout << x << " " << y << std::endl;
   int i_ = int(((float)y) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
   Control_Entrada(i_, j_);
@@ -191,7 +190,6 @@ void Malla::Control_Entrada_Pixel(int x, int y)
 
 void Malla::Control_Salida_Pixel(int x, int y)
 {
-  std::cout << x << " " << y << std::endl;
   int i_ = int(((float)y) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
   Control_Salida(i_, j_);

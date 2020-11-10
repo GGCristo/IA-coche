@@ -4,4 +4,4 @@
 #include "Celda.hpp"
 #include "Malla.hpp"
 
-void ElMejor(Celda&, std::queue<Celda*>&, std::deque<Celda*>&);
+void ElMejor(Celda&, std::deque<Celda*>&, std::deque<Celda*>&);
