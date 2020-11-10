@@ -30,26 +30,24 @@ void ElMejor(Celda& celda, std::queue<Celda*>& visitados, std::deque<Celda*>& pr
       visitados.push(NORTE);
       NORTE->setRetorno(&celda);
     }
-    else if (!SUR->getOcupacion() && !estaprocesada(SUR, procesados))
+    if (!SUR->getOcupacion() && !estaprocesada(SUR, procesados))
     {
       visitados.push(SUR);
       SUR->setRetorno(&celda);
-
     }
-    else if (!OESTE->getOcupacion() && !estaprocesada(OESTE,procesados))
+    if (!OESTE->getOcupacion() && !estaprocesada(OESTE,procesados))
     {
       visitados.push(OESTE);
       OESTE->setRetorno(&celda);
-
     }
-    else if (!ESTE->getOcupacion() && !estaprocesada(ESTE, procesados))
+    if (!ESTE->getOcupacion() && !estaprocesada(ESTE, procesados))
     {
       visitados.push(ESTE);
       ESTE->setRetorno(&celda);
     }
     Celda* nueva = visitados.front();
     visitados.pop();
-    procesados.push_back(nueva);
+    procesados.push_back(&celda);
     ElMejor(*nueva, visitados, procesados);
   }
 }

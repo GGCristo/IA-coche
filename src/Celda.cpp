@@ -78,7 +78,12 @@ void Celda::setRetorno(Celda* celda)
   retorno_ = celda;
 }
 
-const Celda* Celda::getRetorno()
+// const Celda* Celda::getRetorno()
+// {
+//   return retorno_;
+// }
+
+Celda* Celda::getRetorno()
 {
   return retorno_;
 }

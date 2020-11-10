@@ -129,15 +129,29 @@ int main(int argc, char* argv[])
   modificarTerreno(window, Malla::get_instance());
   // Pongo el sleep porque el programa me detecta el enter de forma prematura
   sf::sleep(sf::seconds(0.5));
-
+  window.close();
+  std::queue<Celda*> visitados;
+  std::deque<Celda*> procesados;
+  std::cout << "Indices de Estado inicial " << Malla::get_instance().getEstadoInicial().first << " " << Malla::get_instance().getEstadoInicial().second << '\n';
+  ElMejor(Malla::get_instance()[Malla::get_instance().getEstadoInicial().first][Malla::get_instance().getEstadoInicial().second], visitados, procesados);
+  if (Malla::get_instance()[Malla::get_instance().getEstadoFinal().first][Malla::get_instance().getEstadoFinal().second].getRetorno() == nullptr)
+  {
+    std::cout << "No funciono :(\n";
+    return 1;
+  }
+  else
+  {
+    Celda* celda = &Malla::get_instance()[Malla::get_instance().getEstadoFinal().first][Malla::get_instance().getEstadoFinal().second];
+    while(celda != nullptr)
+    {
+      std::cout << celda->get_i() << celda->get_j();
+      celda = celda->getRetorno();
+    }
+  }
   // Si el usuario cerro la ventana, cierra la aplicación
   if (window.isOpen())
   {
-    std::queue<Celda*> visitados;
-    std::deque<Celda*> procesados;
-    std::cout << "Indices de Estado inicial " << Malla::get_instance().getEstadoInicial().first << " " << Malla::get_instance().getEstadoInicial().second << '\n';
-    ElMejor(Malla::get_instance()[Malla::get_instance().getEstadoInicial().first][Malla::get_instance().getEstadoInicial().second], visitados, procesados);
-    // main_loop(window, Malla::get_instance());
+    main_loop(window, Malla::get_instance());
   }
   return 0;
 }
