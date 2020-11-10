@@ -3,14 +3,7 @@
 
 void Malla::ConstruirObstaculos()
 {
-  int opcion;
-  do
-  {
-    std::cout << "Colocar obstaculos manual(0) o aleatorio(1)\n";
-    std::cin >> opcion;
-  } while (opcion != 0 && opcion != 1);
-
-  if (opcion == 1)
+  if (!fichero_.is_open())
   {
     std::vector<int> lista;
     lista.resize((M_ - 2) * (N_ - 2));
@@ -26,8 +19,16 @@ void Malla::ConstruirObstaculos()
       lista.erase(randomIt);
       Malla_[row + 1][col + 1].Ocupar();
     }
-    mostrar(std::cout);
   }
+  else
+  {
+    int x, y;
+    while (fichero_ >> x >> y)
+    {
+      Malla_[x][y].Ocupar();
+    }
+  }
+  mostrar(std::cout);
 }
 
 void Malla::ColocarPunto(int punto, int row, int col)
@@ -72,17 +73,10 @@ void Malla::draw(sf::RenderWindow& window)
 
 Malla::Malla()
 {
-  std::cout << "Introduzca el numero de filas" << '\n';
-  int row;
-  std::cin >> row;
-  std::cout << "Introduzca el numero de columnas" << '\n';
-  int column;
-  std::cin >> column;
-  M_ = row + 2;
-  N_ = column + 2;
+  EstablecesFilasyColumnas();
   EstadoInicial.first = -1; EstadoInicial.second = -1;
   EstadoFinal.first = -1; EstadoFinal.second = -1;
-  Malla_.resize(row + 2);
+  Malla_.resize(M_);
   for (int i = 0; i < M_; i++)
   {
     Malla_[i].resize(N_, Celda(CalcularTamanoCelda()));
@@ -93,18 +87,59 @@ Malla::Malla()
       Malla_[i][j].setPosicion(i, j);
     }
   }
-
   Levantar_muros();
-
   mostrar(std::cout);
-
-  ConstruirObstaculos();
+  if (fichero_.is_open())
+  {
+    LeerEntradaySalida();
+    ConstruirObstaculos();
+    fichero_.close();
+  }
+  else
+  {
+    int esAleatorio;
+    do
+    {
+      std::cout << "Colocar obstaculos manual(0) o aleatorio(1)\n";
+      std::cin >> esAleatorio;
+    } while (esAleatorio != 0 && esAleatorio != 1);
+    if (esAleatorio == 1)
+    {
+      ConstruirObstaculos();
+    }
+  }
 }
 
 Malla& Malla::get_instance()
 {
   static Malla instance;
   return instance;
+}
+
+void Malla::EstablecesFilasyColumnas()
+{
+  if (!fichero_.is_open())
+  {
+    std::cout << "Introduzca el numero de filas" << '\n';
+    int row;
+    std::cin >> row;
+    std::cout << "Introduzca el numero de columnas" << '\n';
+    int column;
+    std::cin >> column;
+    M_ = row + 2;
+    N_ = column + 2;
+  }
+  else
+  {
+    // TODO
+    std::string linea_fichero;
+    getline(fichero_, linea_fichero);
+    M_ = atoi(linea_fichero.c_str()) + 2;
+    std::cout << linea_fichero << std::endl;
+    getline(fichero_, linea_fichero);
+    N_ = atoi(linea_fichero.c_str()) + 2;
+    std::cout << linea_fichero << std::endl;
+  }
 }
 
 const int& Malla::getRow() const
@@ -145,10 +180,24 @@ void Malla::Click(int x, int y)
   std::cout << "He pinchado en: " << i_ << j_ << '\n';
 }
 
-void Malla::Control_Entrada(int x, int y)
+void Malla::Control_Entrada_Pixel(int x, int y)
 {
-  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
+  std::cout << x << " " << y << std::endl;
+  int i_ = int(((float)y) / Malla_[0][0].getSize().x);
   int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  Control_Entrada(i_, j_);
+}
+
+void Malla::Control_Salida_Pixel(int x, int y)
+{
+  std::cout << x << " " << y << std::endl;
+  int i_ = int(((float)y) / Malla_[0][0].getSize().x);
+  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  Control_Salida(i_, j_);
+}
+
+void Malla::Control_Entrada(int i_, int j_) {
+  std::cout << i_ << " " << j_ << std::endl;
   if (Malla_[i_][j_].getEstado() != vr::FINAL &&
       Malla_[i_][j_].getEstado() != vr::MURO)
   {
@@ -160,10 +209,9 @@ void Malla::Control_Entrada(int x, int y)
   }
 }
 
-void Malla::Control_Salida(int x, int y)
+void Malla::Control_Salida(int i_, int j_)
 {
-  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
-  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
+  std::cout << i_ << " " << j_ << std::endl;
   if (Malla_[i_][j_].getEstado() != vr::INICIAL &&
       Malla_[i_][j_].getEstado() != vr::MURO)
   {
@@ -174,6 +222,7 @@ void Malla::Control_Salida(int x, int y)
     ColocarPunto(vr::FINAL, i_, j_);
   }
 }
+
 
 // El tamaño de las celdad es lo máximo que le permita el tamaño de la pantalla
 float Malla::CalcularTamanoCelda() const
@@ -244,4 +293,12 @@ const std::vector<Celda>& Malla::operator [](int pos) const
 std::vector<Celda>& Malla::operator [](int pos)
 {
   return Malla_[pos];
+}
+
+void Malla::LeerEntradaySalida() {
+  int x, y;
+  fichero_ >> x >> y;
+  Control_Entrada(x, y);
+  fichero_ >> x >> y;
+  Control_Salida(x, y);
 }

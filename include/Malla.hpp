@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <fstream>
 #include "Celda.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -53,7 +54,10 @@ class Malla
     void Levantar_muros();
     Malla();
   public:
+    static std::ifstream fichero_;
+
     static Malla& get_instance();
+    void EstablecesFilasyColumnas();
     const int& getRow() const;
     const int& getColumn() const;
     const std::pair<int, int>& getEstadoInicial() const;
@@ -61,11 +65,13 @@ class Malla
     void Click(int, int);
     void Control_Entrada(int, int);
     void Control_Salida(int, int);
-    void ConstruirGrafo();
+    void Control_Entrada_Pixel(int, int);
+    void Control_Salida_Pixel(int, int);
     bool haySalidayEntrada() const;
     std::ostream& mostrar(std::ostream&);
     const std::vector<Celda>& operator [](int) const;
     std::vector<Celda>& operator [](int);
+    void LeerEntradaySalida();
 
     // Interfaz
     void draw(sf::RenderWindow& window);
