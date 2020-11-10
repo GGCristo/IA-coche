@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Sleep.hpp>
 #include "Texturas.hpp"
 #include "variables.hpp"
 #include "Malla.hpp"
