@@ -7,7 +7,7 @@ void Malla::ConstruirObstaculos()
   {
     std::vector<int> lista;
     lista.resize((M_ - 2) * (N_ - 2));
-    for (int i = 0; i < lista.size(); i++)
+    for (int i = 0; i < lista.size(); ++i)
     {
       lista[i] = i;
     }
@@ -22,7 +22,8 @@ void Malla::ConstruirObstaculos()
   }
   else
   {
-    int x, y;
+    int x;
+    int y;
     while (fichero_ >> x >> y)
     {
       Malla_[x][y].Ocupar();
@@ -296,7 +297,8 @@ std::vector<Celda>& Malla::operator [](int pos)
 }
 
 void Malla::LeerEntradaySalida() {
-  int x, y;
+  int x;
+  int y;
   fichero_ >> x >> y;
   Control_Entrada(x, y);
   fichero_ >> x >> y;
