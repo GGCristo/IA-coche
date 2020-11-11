@@ -32,12 +32,19 @@ char carga()
   return nombre[variable++];
 }
 
+void Elprimeromejor()
+{
+  std::deque<Celda*> visitaras;
+  std::deque<Celda*> procesados;
+  ElMejor(Malla::get_instance().getEstadoInicial(), visitaras, procesados);
+}
+
+// TODO no puedo hacer a la celda constante
 void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& procesados)
 {
-  if (celda.get_i() == Malla::get_instance().getEstadoFinal().first &&
-      celda.get_j() == Malla::get_instance().getEstadoFinal().second)
+  if (celda.get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
+      celda.get_j() == Malla::get_instance().getEstadoFinal().get_j())
   {
-    // std::cout << "Explota cuando va a retornar el final\n";
     return;
   }
   else

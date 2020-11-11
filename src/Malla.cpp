@@ -37,12 +37,12 @@ void Malla::ColocarPunto(int punto, int row, int col)
   if (punto == vr::FINAL)
   {
     Malla_[row][col].setEstado(vr::FINAL);
-    EstadoFinal.first = row; EstadoFinal.second = col;
+    EstadoFinal = &Malla_[row][col];
   }
   else
   {
     Malla_[row][col].setEstado(vr::INICIAL);
-    EstadoInicial.first = row; EstadoInicial.second = col;
+    EstadoInicial = &Malla_[row][col];
   }
   mostrar(std::cout);
 }
@@ -75,8 +75,8 @@ void Malla::draw(sf::RenderWindow& window)
 Malla::Malla()
 {
   EstablecesFilasyColumnas();
-  EstadoInicial.first = -1; EstadoInicial.second = -1;
-  EstadoFinal.first = -1; EstadoFinal.second = -1;
+  EstadoInicial = nullptr;
+  EstadoFinal = nullptr;
   Malla_.resize(M_);
   for (int i = 0; i < M_; i++)
   {
@@ -153,14 +153,14 @@ const int& Malla::getColumn() const
   return N_;
 }
 
-const std::pair<int, int>& Malla::getEstadoInicial() const
+Celda& Malla::getEstadoInicial()
 {
-  return EstadoInicial;
+  return *EstadoInicial;
 }
 
-const std::pair<int, int>& Malla::getEstadoFinal() const
+Celda& Malla::getEstadoFinal()
 {
-  return EstadoFinal;
+  return *EstadoFinal;
 }
 
 void Malla::Click(int x, int y)
@@ -200,9 +200,9 @@ void Malla::Control_Entrada(int i_, int j_) {
   if (Malla_[i_][j_].getEstado() != vr::FINAL &&
       Malla_[i_][j_].getEstado() != vr::MURO)
   {
-    if (EstadoInicial.first >= 0 && EstadoInicial.second >= 0)
+    if (EstadoInicial)
     {
-      Malla_[EstadoInicial.first][EstadoInicial.second].setEstado(vr::DEFAULT);
+      EstadoInicial->setEstado(vr::DEFAULT);
     }
     ColocarPunto(vr::INICIAL, i_, j_);
   }
@@ -214,9 +214,9 @@ void Malla::Control_Salida(int i_, int j_)
   if (Malla_[i_][j_].getEstado() != vr::INICIAL &&
       Malla_[i_][j_].getEstado() != vr::MURO)
   {
-    if (EstadoFinal.first >= 0 && EstadoFinal.second >=  0)
+    if (EstadoFinal)
     {
-      Malla_[EstadoFinal.first][EstadoFinal.second].setEstado(vr::DEFAULT);
+      EstadoFinal->setEstado(vr::DEFAULT);
     }
     ColocarPunto(vr::FINAL, i_, j_);
   }
@@ -280,8 +280,7 @@ std::ostream& Malla::mostrar(std::ostream& os)
 
 bool Malla::haySalidayEntrada() const
 {
-  return (EstadoInicial.first >= 0 && EstadoInicial.second >= 0 &&
-      EstadoFinal.first >= 0 && EstadoFinal.second >= 0);
+  return (EstadoInicial && EstadoFinal);
 }
 
 const std::vector<Celda>& Malla::operator [](int pos) const

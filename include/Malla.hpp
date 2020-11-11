@@ -22,8 +22,8 @@ class Malla
     MATRIX Malla_;
     int M_; // Filas
     int N_; // Columnas
-    std::pair<int, int> EstadoInicial;
-    std::pair<int, int> EstadoFinal;
+    Celda* EstadoInicial;
+    Celda* EstadoFinal;
     /**
      * @brief Poner obstaculos aleatorios por la malla
      *        Se crea una lista de números y se van sacando números aleatorios
@@ -62,8 +62,8 @@ class Malla
     Malla& operator = (const Malla&) = delete;
     const int& getRow() const;
     const int& getColumn() const;
-    const std::pair<int, int>& getEstadoInicial() const;
-    const std::pair<int, int>& getEstadoFinal() const;
+    Celda& getEstadoInicial();
+    Celda& getEstadoFinal();
     void Click(int, int);
     void Control_Entrada(int, int);
     void Control_Salida(int, int);

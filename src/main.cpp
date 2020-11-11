@@ -2,7 +2,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <iostream>
-#include <queue>
+#include <queue> // TODO Crea un wrapper para el algoritmo
+#include <chrono>
 #include "../include/Malla.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Coche.hpp"
@@ -31,9 +32,7 @@ static void modificarTerreno(sf::RenderWindow& window, Malla& malla);
  */
 void main_loop(sf::RenderWindow& window, Malla& malla)
 {
-  const Celda& EstadoInicial = malla[malla.getEstadoInicial().first]
-    [malla.getEstadoInicial().second];
-  Coche coche(malla[0][0].getSize(), EstadoInicial.getPosition());
+  Coche coche(malla[0][0].getSize(), Malla::get_instance().getEstadoInicial().getPosition());
   while (window.isOpen())
   {
     sf::Event event;
@@ -103,8 +102,6 @@ int main(int argc, char* argv[])
       Malla::fichero_.close();
       return  1;
     }
-    // Malla::fichero_.close();
-    // Malla::fichero_.open(nombre_fichero_entrada, std::ios::in);
     Malla::fichero_.clear();
     Malla::fichero_.seekg(0);
   }
@@ -132,16 +129,19 @@ int main(int argc, char* argv[])
 
   std::deque<Celda*> visitados;
   std::deque<Celda*> procesados;
-  ElMejor(Malla::get_instance()[Malla::get_instance().getEstadoInicial().first][Malla::get_instance().getEstadoInicial().second], visitados, procesados);
+  auto t1 = std::chrono::high_resolution_clock::now();
+  Elprimeromejor();
+  auto t2 = std::chrono::high_resolution_clock::now();
+  std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " milisegundos\n";
 
-  if (Malla::get_instance()[Malla::get_instance().getEstadoFinal().first][Malla::get_instance().getEstadoFinal().second].getRetorno() == nullptr)
+  if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)
   {
     std::cout << "No funciono :(\n";
     return 1;
   }
   else
   {
-    Celda* celda = &Malla::get_instance()[Malla::get_instance().getEstadoFinal().first][Malla::get_instance().getEstadoFinal().second];
+    Celda* celda = &Malla::get_instance().getEstadoFinal();
     while(celda != nullptr)
     {
       std::cout << "i "<< celda->get_i() << " j " <<celda->get_j() << '\n';

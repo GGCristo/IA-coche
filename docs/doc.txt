@@ -20,3 +20,4 @@ Poner rotación en la función move
 Poner animaciones en la función move
 Termina de documentar
 Echarle un ojo al enter
+Mira a ver si puedes trabajar con celdas constantes
