@@ -2,8 +2,8 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <iostream>
-#include <queue> // TODO Crea un wrapper para el algoritmo
 #include <chrono>
+#include <algorithm>
 #include "../include/Malla.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Coche.hpp"
@@ -30,9 +30,9 @@ static void modificarTerreno(sf::RenderWindow& window, Malla& malla);
  * @param window Muestralo a travez de esta ventana
  * @param malla Malla donde se va a mover el coche que vamos a crear dentro
  */
-void main_loop(sf::RenderWindow& window, Malla& malla)
+void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recorrido)
 {
-  Coche coche(malla[0][0].getSize(), Malla::get_instance().getEstadoInicial().getPosition());
+  Coche coche(malla[0][0].getSize(), recorrido);
   while (window.isOpen())
   {
     sf::Event event;
@@ -44,15 +44,8 @@ void main_loop(sf::RenderWindow& window, Malla& malla)
         window.close();
       }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-      coche.Move(3);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-      coche.Move(2);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-      coche.Move(1);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-      coche.Move(-1);
-    }
+
+    coche.Move();
     window.clear();
     malla.draw(window);
     window.draw(coche);
@@ -134,9 +127,10 @@ int main(int argc, char* argv[])
   auto t2 = std::chrono::high_resolution_clock::now();
   std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " milisegundos\n";
 
+  std::vector<Celda*> recorrido;
   if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)
   {
-    std::cout << "No funciono :(\n";
+    std::cout << "No hay camino disponible";
     return 1;
   }
   else
@@ -144,14 +138,17 @@ int main(int argc, char* argv[])
     Celda* celda = &Malla::get_instance().getEstadoFinal();
     while(celda != nullptr)
     {
+      recorrido.push_back(celda);
       std::cout << "i "<< celda->get_i() << " j " <<celda->get_j() << '\n';
       celda = celda->getRetorno();
     }
   }
+  std::reverse(recorrido.begin(), recorrido.end());
+
   // Si el usuario cerro la ventana, cierra la aplicación
   if (window.isOpen())
   {
-    main_loop(window, Malla::get_instance());
+    main_loop(window, Malla::get_instance(), recorrido);
   }
   return 0;
 }

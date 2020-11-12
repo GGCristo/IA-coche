@@ -61,7 +61,7 @@ class Celda: public sf::Drawable
     const int get_j();
     void setRetorno(Celda*);
     // const Celda* getRetorno();
-    Celda* getRetorno();
+    Celda* getRetorno() const;
     /**
      * @brief Devuelve el "Estado_" en el que se encuentra la celda
      *

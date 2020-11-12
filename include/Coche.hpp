@@ -13,9 +13,11 @@ class Coche : public sf::Drawable
   private:
     sf::Sprite coche;
     sf::Vector2f desplazamiento_;
+    // const Celda* celda_actual_;
+    std::vector<Celda*> recorrido_;
   public:
-    Coche(const sf::Vector2f&, const sf::Vector2f&);
-    void Move(int);
+    Coche(const sf::Vector2f&, std::vector<Celda*>);
+    void Move();
 
   protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

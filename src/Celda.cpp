@@ -83,7 +83,7 @@ void Celda::setRetorno(Celda* celda)
 //   return retorno_;
 // }
 
-Celda* Celda::getRetorno()
+Celda* Celda::getRetorno() const
 {
   return retorno_;
 }
