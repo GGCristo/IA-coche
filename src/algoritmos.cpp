@@ -1,5 +1,38 @@
 #include "../include/algoritmos.hpp"
 
+bool mysort(const std::pair<Celda*, float> &a, std::pair<Celda*, float> &b)
+{
+  return (a.second < b.second);
+}
+
+std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado)
+{
+  std::vector<std::pair<Celda*, float>> nuevo_vector;
+  for (int i = 0; i < vector_desordenado.size(); i++)
+  {
+    float h;
+    if (opcion == 0)
+    {
+      h = (abs(vector_desordenado[i]->get_i() - Malla::get_instance().getEstadoFinal().get_i()) + abs(vector_desordenado[i]->get_j() - Malla::get_instance().getEstadoFinal().get_j()));
+    }
+    else
+    {
+       h = sqrt(pow((vector_desordenado[i]->get_i() - 3),2)
+     + pow((vector_desordenado[i]->get_j() - 3), 2));
+    }
+    nuevo_vector.push_back(std::make_pair(vector_desordenado[i], h));
+  }
+
+  std::sort(nuevo_vector.begin(), nuevo_vector.end(), mysort);
+
+  std::vector<Celda*> vector_ordenado;
+  for (int i = 0; i < nuevo_vector.size(); i++)
+  {
+    vector_ordenado.push_back(nuevo_vector[i].first);
+  }
+  return vector_ordenado;
+}
+
 bool estaprocesada(Celda* celda, const std::deque<Celda*>& procesados)
 {
   for (int i = 0; i < procesados.size(); ++i)
@@ -24,14 +57,6 @@ bool estaenvisitas(Celda* celda, const std::deque<Celda*>& visitaras)
   return false;
 }
 
-char carga()
-{
-  static int variable = 0;
-  char nombre[] = {'\\', '|', '/', '-'};
-  if (variable == 4) variable = 0;
-  return nombre[variable++];
-}
-
 void Elprimeromejor()
 {
   std::deque<Celda*> visitaras;
@@ -49,31 +74,40 @@ void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& pr
   }
   else
   {
-    std::cout << "Cargando" + std::string(1, carga()) << '\n';
     Celda* NORTE = &Malla::get_instance()[celda.get_i() - 1][celda.get_j()];
     Celda* SUR   = &Malla::get_instance()[celda.get_i() + 1][celda.get_j()];
     Celda* OESTE = &Malla::get_instance()[celda.get_i()][celda.get_j() - 1];
     Celda* ESTE  = &Malla::get_instance()[celda.get_i()][celda.get_j() + 1];
+    std::vector<Celda*> heuristico;
     if (!NORTE->getOcupacion() && !estaprocesada(NORTE, procesados) && !estaenvisitas(NORTE, visitaras))
     {
-      visitaras.push_back(NORTE);
+      heuristico.push_back(NORTE);
       NORTE->setRetorno(&celda);
     }
     if (!SUR->getOcupacion() && !estaprocesada(SUR, procesados) && !estaenvisitas(SUR, visitaras))
     {
-      visitaras.push_back(SUR);
+      heuristico.push_back(SUR);
       SUR->setRetorno(&celda);
     }
     if (!OESTE->getOcupacion() && !estaprocesada(OESTE,procesados) && !estaenvisitas(OESTE, visitaras))
     {
-      visitaras.push_back(OESTE);
+      heuristico.push_back(OESTE);
       OESTE->setRetorno(&celda);
     }
     if (!ESTE->getOcupacion() && !estaprocesada(ESTE, procesados) && !estaenvisitas(ESTE, visitaras))
     {
-      visitaras.push_back(ESTE);
+      heuristico.push_back(ESTE);
       ESTE->setRetorno(&celda);
     }
+    if (!heuristico.empty())
+    {
+      heuristico = Heuristica(heuristico);
+    }
+    for (int i = 0; i < heuristico.size(); i++)
+    {
+      visitaras.push_back(heuristico[i]);
+    }
+
     Celda* nueva;
     if (!visitaras.empty())
     {

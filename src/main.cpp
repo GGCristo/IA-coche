@@ -3,7 +3,8 @@
 #include <SFML/System/Sleep.hpp>
 #include <iostream>
 #include <chrono>
-#include <algorithm>
+#include <algorithm> // reverse
+#include <thread>
 #include "../include/Malla.hpp"
 #include "../include/Celda.hpp"
 #include "../include/Coche.hpp"
@@ -24,6 +25,7 @@ std::ifstream Malla::fichero_;
  */
 static void modificarTerreno(sf::RenderWindow& window, Malla& malla);
 
+int casoFichero(int argc, char* argv[]);
 /**
  * @brief Muestra el resultado del algoritmo
  *
@@ -55,13 +57,102 @@ void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recor
 
 int main(int argc, char* argv[])
 {
+  int id = casoFichero(argc, argv);
+
+  if (id > 0)
+  {
+    return id;
+  }
+
+  // Inicializo las texturas para que en caso de que no
+  // cargen el programa cierre de forma segura
+  try
+  {
+    Texturas::getTexturas();
+  }
+  catch(const char* msg)
+  {
+    std::cerr << msg;
+    return 1;
+  }
+
+  Malla::get_instance();
+
+  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
+  window.setFramerateLimit(15);
+  modificarTerreno(window, Malla::get_instance());
+  // Pongo el sleep porque el programa me detecta el enter de forma prematura
+  sf::sleep(sf::seconds(0.25));
+
+  if (window.isOpen())
+  {
+    auto t1 = std::chrono::high_resolution_clock::now();
+    Elprimeromejor();
+    auto t2 = std::chrono::high_resolution_clock::now();
+    std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " milisegundos\n";
+
+    std::vector<Celda*> recorrido;
+    if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)
+    {
+      std::cout << "No hay camino disponible";
+      return 1;
+    }
+    else
+    {
+      Celda* celda = &Malla::get_instance().getEstadoFinal();
+      while(celda != nullptr)
+      {
+        recorrido.push_back(celda);
+        celda = celda->getRetorno();
+      }
+    }
+    std::reverse(recorrido.begin(), recorrido.end());
+    main_loop(window, Malla::get_instance(), recorrido);
+  }
+  std::cout << "Hilos disponible: " << std::thread::hardware_concurrency() << '\n';
+  return 0;
+}
+
+void modificarTerreno(sf::RenderWindow& window, Malla& malla)
+{
+  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.haySalidayEntrada()))
+  {
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed ||
+          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+      {
+        window.close();
+      }
+      if (event.type == sf::Event::MouseButtonPressed)
+      {
+        malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+      malla.Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+    {
+      malla.Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+    }
+    window.clear();
+    malla.draw(window);
+    window.display();
+  }
+}
+
+int casoFichero(int argc, char* argv[])
+{
   if (argc == 2 && std::string(argv[1]) == "--help")
   {
     std::cout << "                               ¡AYUDA!" << std::endl;
     std::cout << "---------------------------- MODO DE USO -----------------------------------------" << std::endl;
     std::cout << "Debe ponerlo de la forma: ./bin/main Intput.txt" << std::endl;
     std::cout << "El Input.txt debe ser el fichero de entrada en el que se encuentran las posiciones" << std::endl;
-    return 0;
+    return 1;
   }
   if (argc > 2)
   {
@@ -98,88 +189,5 @@ int main(int argc, char* argv[])
     Malla::fichero_.clear();
     Malla::fichero_.seekg(0);
   }
-
-  // Inicializo las texturas para que en caso de que no
-  // cargen el programa cierre de forma segura
-  try
-  {
-    Texturas::getTexturas();
-  }
-  catch(const char* msg)
-  {
-    std::cerr << msg;
-    return 1;
-  }
-
-  Malla::get_instance();
-
-  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
-  window.setFramerateLimit(15);
-
-  modificarTerreno(window, Malla::get_instance());
-  // Pongo el sleep porque el programa me detecta el enter de forma prematura
-  sf::sleep(sf::seconds(0.25));
-
-  std::deque<Celda*> visitados;
-  std::deque<Celda*> procesados;
-  auto t1 = std::chrono::high_resolution_clock::now();
-  Elprimeromejor();
-  auto t2 = std::chrono::high_resolution_clock::now();
-  std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " milisegundos\n";
-
-  std::vector<Celda*> recorrido;
-  if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)
-  {
-    std::cout << "No hay camino disponible";
-    return 1;
-  }
-  else
-  {
-    Celda* celda = &Malla::get_instance().getEstadoFinal();
-    while(celda != nullptr)
-    {
-      recorrido.push_back(celda);
-      std::cout << "i "<< celda->get_i() << " j " <<celda->get_j() << '\n';
-      celda = celda->getRetorno();
-    }
-  }
-  std::reverse(recorrido.begin(), recorrido.end());
-
-  // Si el usuario cerro la ventana, cierra la aplicación
-  if (window.isOpen())
-  {
-    main_loop(window, Malla::get_instance(), recorrido);
-  }
   return 0;
-}
-
-void modificarTerreno(sf::RenderWindow& window, Malla& malla)
-{
-  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.haySalidayEntrada()))
-  {
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-      if (event.type == sf::Event::Closed ||
-          sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-      {
-        window.close();
-      }
-      if (event.type == sf::Event::MouseButtonPressed)
-      {
-        malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-      }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-      malla.Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-    {
-      malla.Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-    }
-    window.clear();
-    malla.draw(window);
-    window.display();
-  }
 }

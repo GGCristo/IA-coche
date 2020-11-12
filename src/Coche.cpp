@@ -3,10 +3,6 @@
 
 Coche::Coche(const sf::Vector2f& tamano, std::vector<Celda*> recorrido)
 {
-  // if (celda_inicial == nullptr)
-  // {
-  //   std::cout << "Entra siendo nulo\n";
-  // }
   recorrido_ = recorrido;
   coche.setTexture(Texturas::getTexturas(tx::COCHE));
   coche.scale(tamano.x / coche.getLocalBounds().width, tamano.y / coche.getLocalBounds().height);
