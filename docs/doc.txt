@@ -13,7 +13,7 @@ ERRORES
 2 = El estado no existe
 
 EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
-EFinal_ no se usa nunca
+No uses recorrido despues de crear un coche, utilize move en el constructor
 
 TODO
 Poner rotación en la función move

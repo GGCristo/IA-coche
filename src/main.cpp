@@ -47,11 +47,11 @@ void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recor
       }
     }
 
-    coche.Move();
     window.clear();
     malla.draw(window);
     window.draw(coche);
     window.display();
+    coche.Move();
   }
 }
 
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
     auto t1 = std::chrono::high_resolution_clock::now();
     Elprimeromejor();
     auto t2 = std::chrono::high_resolution_clock::now();
-    std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " milisegundos\n";
+    std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " microsegundos\n";
 
     std::vector<Celda*> recorrido;
     if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)

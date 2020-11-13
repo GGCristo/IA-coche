@@ -97,7 +97,7 @@ void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& pr
     heuristico.push_back(ESTE);
     ESTE->setRetorno(&celda);
   }
-  if (!heuristico.empty())
+  if (heuristico.size() > 1)
   {
     heuristico = Heuristica(heuristico);
   }

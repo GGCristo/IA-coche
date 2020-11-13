@@ -16,7 +16,6 @@ class Celda: public sf::Drawable
     int j_;
     int Estado_;
     Celda* retorno_;
-    // bool EFinal_;
 
     // Interfaz
     /**
