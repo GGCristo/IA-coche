@@ -116,6 +116,10 @@ void Celda::setEstado(int estado)
   {
     celda.setTexture(&Texturas::getTexturas(tx::SALIDA), true);
   }
+  else if (Estado_ == vr::TIERRA)
+  {
+    celda.setTexture(&Texturas::getTexturas(tx::DIRT), true);
+  }
   else
   {
     std::cerr << "El estado " << estado << " no existe\n";

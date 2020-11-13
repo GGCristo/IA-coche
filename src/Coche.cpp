@@ -18,6 +18,9 @@ void Coche::Move() {
   static int posicion_recorrido = 0;
   if (posicion_recorrido < recorrido_.size())
   {
-    coche.setPosition(recorrido_[posicion_recorrido++]->getPosition());
-  }
+    if (posicion_recorrido != 0 && posicion_recorrido != recorrido_.size() - 1)
+    {
+      recorrido_[posicion_recorrido]->setEstado(vr::TIERRA);
+    }
+    coche.setPosition(recorrido_[posicion_recorrido++]->getPosition()); }
 }
