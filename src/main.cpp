@@ -16,6 +16,7 @@
 
 int Malla::PorcentajeDeObstaculos = 10;
 std::ifstream Malla::fichero_;
+int opcion_heuristico = 0;
 
 /**
  * @brief Bucle para que el usuario cree las condiciones iniciales del "tablero"
@@ -77,6 +78,13 @@ int main(int argc, char* argv[])
   }
 
   Malla::get_instance();
+
+  do
+  {
+    std::cout << "Algoritmo a usar\n";
+    std::cout << "Manhattan[0] Euclidea[1]\n";
+    std::cin >> opcion_heuristico;
+  } while(opcion_heuristico != 0 && opcion_heuristico != 1);
 
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);

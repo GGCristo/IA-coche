@@ -27,11 +27,11 @@ void Coche::Move()
       Celda* siguiente = recorrido_[posicion_recorrido + 1];
       if (siguiente->get_i() < recorrido_[posicion_recorrido]->get_i()) // Norte
       {
-        coche.setRotation(90);
+        coche.setRotation(-90);
       }
       else if (siguiente->get_i() > recorrido_[posicion_recorrido]->get_i()) // Sur
       {
-        coche.setRotation(-90);
+        coche.setRotation(90);
       }
       else if (siguiente->get_j() < recorrido_[posicion_recorrido]->get_j()) // Oeste
       {

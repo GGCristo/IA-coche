@@ -11,7 +11,7 @@ std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado)
   for (int i = 0; i < vector_desordenado.size(); i++)
   {
     double h;
-    if (opcion == 0)
+    if (opcion_heuristico == 0)
     {
       h = (abs(vector_desordenado[i]->get_i() - Malla::get_instance().getEstadoFinal().get_i()) + abs(vector_desordenado[i]->get_j() - Malla::get_instance().getEstadoFinal().get_j()));
     }

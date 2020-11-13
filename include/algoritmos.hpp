@@ -4,7 +4,7 @@
 #include <cmath>
 #include "Celda.hpp"
 #include "Malla.hpp"
-const int opcion = 0;
+extern int opcion_heuristico;
 std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado);
 bool mysort(const std::pair<Celda*, float> &a, const std::pair<Celda*, float> &b);
 void Elprimeromejor();
