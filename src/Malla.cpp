@@ -143,16 +143,6 @@ void Malla::EstablecesFilasyColumnas()
   }
 }
 
-const int& Malla::getRow() const
-{
-  return M_;
-}
-
-const int& Malla::getColumn() const
-{
-  return N_;
-}
-
 Celda& Malla::getEstadoInicial()
 {
   return *EstadoInicial;

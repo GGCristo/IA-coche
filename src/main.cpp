@@ -105,8 +105,9 @@ int main(int argc, char* argv[])
         recorrido.push_back(celda);
         celda = celda->getRetorno();
       }
+      std::reverse(recorrido.begin(), recorrido.end());
     }
-    std::reverse(recorrido.begin(), recorrido.end());
+
     main_loop(window, Malla::get_instance(), recorrido);
   }
   std::cout << "Hilos disponible: " << std::thread::hardware_concurrency() << '\n';

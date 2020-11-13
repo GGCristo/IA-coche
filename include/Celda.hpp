@@ -57,8 +57,8 @@ class Celda: public sf::Drawable
      *
      */
     void Ocupar();
-    const int get_i();
-    const int get_j();
+    const int get_i() const;
+    const int get_j() const;
     void setRetorno(Celda*);
     // const Celda* getRetorno();
     Celda* getRetorno() const;

@@ -16,7 +16,7 @@ class Coche : public sf::Drawable
     // const Celda* celda_actual_;
     std::vector<Celda*> recorrido_;
   public:
-    Coche(const sf::Vector2f&, std::vector<Celda*>);
+    Coche(const sf::Vector2f&, std::vector<Celda*>&);
     void Move();
 
   protected:

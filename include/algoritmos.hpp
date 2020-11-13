@@ -6,6 +6,6 @@
 #include "Malla.hpp"
 const int opcion = 1;
 std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado);
-std::vector<Celda*> Hola(std::vector<Celda*>& vector_desordenado);
+bool mysort(const std::pair<Celda*, float> &a, const std::pair<Celda*, float> &b);
 void Elprimeromejor();
 void ElMejor(Celda&, std::deque<Celda*>&, std::deque<Celda*>&);

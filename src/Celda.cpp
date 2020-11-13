@@ -63,12 +63,12 @@ void Celda::Ocupar()
   setEstado(vr::OBSTACULO);
 }
 
-const int Celda::get_i()
+const int Celda::get_i() const
 {
   return i_;
 }
 
-const int Celda::get_j()
+const int Celda::get_j() const
 {
   return j_;
 }
