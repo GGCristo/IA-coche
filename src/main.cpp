@@ -14,6 +14,7 @@
 #include <iostream>
 #include <fstream>
 
+// TODO mejorar respuesta del esc, no permitir pinchar fuera
 int Malla::PorcentajeDeObstaculos = 10;
 std::ifstream Malla::fichero_;
 int opcion_heuristico = 0;
@@ -24,7 +25,7 @@ int opcion_heuristico = 0;
  * @param window ventana para hacer el proceso interactivo
  * @param malla Guarda los cambios en la malla, para poder trabajar con los datos
  */
-static void modificarTerreno(sf::RenderWindow& window, Malla& malla);
+static void modificarTerreno(sf::RenderWindow& window);
 
 int casoFichero(int argc, char* argv[]);
 /**
@@ -33,11 +34,9 @@ int casoFichero(int argc, char* argv[]);
  * @param window Muestralo a travez de esta ventana
  * @param malla Malla donde se va a mover el coche que vamos a crear dentro
  */
-void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recorrido)
+void main_loop(sf::RenderWindow& window, std::vector<Celda*> recorrido)
 {
-  Coche coche(malla[0][0].getSize(), recorrido);
-  sf::View view = window.getDefaultView();
-
+  Coche coche(Malla::get_instance()[0][0].getSize(), recorrido);
   while (window.isOpen())
   {
     sf::Event event;
@@ -48,22 +47,9 @@ void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recor
       {
         window.close();
       }
-      if (event.type == sf::Event::MouseWheelScrolled)
-      {
-        if (event.mouseWheelScroll.delta < 0)
-        {
-          view.zoom(1.10);
-        }
-        else
-        {
-          view.zoom(0.90);
-        }
-      }
     }
-    view.setCenter(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-    window.setView(view);
     window.clear();
-    malla.draw(window);
+    Malla::get_instance().draw(window);
     window.draw(coche);
     window.display();
     coche.Move();
@@ -102,7 +88,7 @@ int main(int argc, char* argv[])
 
   sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "IA-COCHE", sf::Style::Fullscreen);
   window.setFramerateLimit(15);
-  modificarTerreno(window, Malla::get_instance());
+  modificarTerreno(window);
   // Pongo el sleep porque el programa me detecta el enter de forma prematura
   sf::sleep(sf::seconds(0.25));
 
@@ -133,14 +119,14 @@ int main(int argc, char* argv[])
       std::reverse(recorrido.begin(), recorrido.end());
     }
 
-    main_loop(window, Malla::get_instance(), recorrido);
+    main_loop(window, recorrido);
   }
   return 0;
 }
 
-void modificarTerreno(sf::RenderWindow& window, Malla& malla)
+void modificarTerreno(sf::RenderWindow& window)
 {
-  while (window.isOpen() && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && malla.haySalidayEntrada()))
+  while (window.isOpen())
   {
     sf::Event event;
     while (window.pollEvent(event))
@@ -152,22 +138,26 @@ void modificarTerreno(sf::RenderWindow& window, Malla& malla)
       }
       if (event.type == sf::Event::MouseButtonPressed)
       {
-        malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+        Malla::get_instance().Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
       }
       if (event.type == sf::Event::KeyPressed)
       {
         if (event.key.code == sf::Keyboard::Space)
         {
-          malla.Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+          Malla::get_instance().Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
         }
         else if (event.key.code == sf::Keyboard::LControl)
         {
-          malla.Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+          Malla::get_instance().Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+        }
+        else if (event.key.code == sf::Keyboard::Enter && Malla::get_instance().haySalidayEntrada())
+        {
+          return;
         }
       }
     }
     window.clear();
-    malla.draw(window);
+    Malla::get_instance().draw(window);
     window.display();
   }
 }

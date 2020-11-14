@@ -22,10 +22,6 @@ class Celda: public sf::Drawable
      * @celda Instancia para la interfaz
      */
     sf::RectangleShape celda;
-    /**
-     * @muros Los 4 muros que rodean cada celda, para cear el efecto de malla
-     */
-    std::array<sf::RectangleShape, 4> muros;
 
   public:
     /**

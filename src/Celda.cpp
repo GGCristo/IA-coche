@@ -12,17 +12,6 @@ Celda::Celda(float tamano)
   retorno_ = nullptr;
   setEstado(vr::DEFAULT);
   celda.setSize(sf::Vector2f(tamano, tamano));
-
-  auto acortamiento = 25;
-  muros[0].setSize(sf::Vector2f(tamano, tamano / acortamiento));
-  muros[1].setSize(sf::Vector2f(tamano, tamano / acortamiento));
-  muros[2].setSize(sf::Vector2f(tamano / acortamiento, tamano));
-  muros[3].setSize(sf::Vector2f(tamano / acortamiento, tamano));
-
-  for (int i = 0; i < 4; i++)
-  {
-    muros[i].setFillColor(sf::Color::Black);
-  }
 }
 
 Celda::Celda(const Celda& celda2)
@@ -32,16 +21,6 @@ Celda::Celda(const Celda& celda2)
   retorno_ = celda2.retorno_;
   setEstado(celda2.Estado_);
   celda.setSize(sf::Vector2f(celda2.celda.getSize()));
-
-  for (int i = 0; i < 4; i++)
-  {
-    muros[i].setSize(celda2.muros[i].getSize());
-  }
-
-  for (int i = 0; i < 4; i++)
-  {
-    muros[i].setFillColor(celda2.muros[i].getFillColor());
-  }
 }
 
 Celda::~Celda()
@@ -77,11 +56,6 @@ void Celda::setRetorno(Celda* celda)
 {
   retorno_ = celda;
 }
-
-// const Celda* Celda::getRetorno()
-// {
-//   return retorno_;
-// }
 
 Celda* Celda::getRetorno() const
 {
@@ -139,11 +113,6 @@ void Celda::setPosicion(int i, int j)
 
   celda.setPosition((celda.getSize().y) * (float)j_,
                     (celda.getSize().x) * (float)i_);
-  for (int z = 0; z < 4; z++)
-  {
-    muros[z].setPosition(sf::Vector2f(celda.getPosition().x,
-                                      celda.getPosition().y));
-  }
 }
 
 const sf::Vector2f& Celda::getSize() const
@@ -154,8 +123,4 @@ const sf::Vector2f& Celda::getSize() const
 void Celda::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   target.draw(celda);
-  for (int i = 0; i < 4; i++)
-  {
-    target.draw(muros[i]);
-  }
 }
