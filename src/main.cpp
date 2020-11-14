@@ -36,6 +36,8 @@ int casoFichero(int argc, char* argv[]);
 void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recorrido)
 {
   Coche coche(malla[0][0].getSize(), recorrido);
+  sf::View view = window.getDefaultView();
+
   while (window.isOpen())
   {
     sf::Event event;
@@ -46,8 +48,20 @@ void main_loop(sf::RenderWindow& window, Malla& malla, std::vector<Celda*> recor
       {
         window.close();
       }
+      if (event.type == sf::Event::MouseWheelScrolled)
+      {
+        if (event.mouseWheelScroll.delta < 0)
+        {
+          view.zoom(1.10);
+        }
+        else
+        {
+          view.zoom(0.90);
+        }
+      }
     }
-
+    view.setCenter(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+    window.setView(view);
     window.clear();
     malla.draw(window);
     window.draw(coche);
@@ -121,7 +135,6 @@ int main(int argc, char* argv[])
 
     main_loop(window, Malla::get_instance(), recorrido);
   }
-  std::cout << "Hilos disponible: " << std::thread::hardware_concurrency() << '\n';
   return 0;
 }
 
@@ -141,14 +154,17 @@ void modificarTerreno(sf::RenderWindow& window, Malla& malla)
       {
         malla.Click(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
       }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
-      malla.Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-    {
-      malla.Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      if (event.type == sf::Event::KeyPressed)
+      {
+        if (event.key.code == sf::Keyboard::Space)
+        {
+          malla.Control_Entrada_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+        }
+        else if (event.key.code == sf::Keyboard::LControl)
+        {
+          malla.Control_Salida_Pixel(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+        }
+      }
     }
     window.clear();
     malla.draw(window);
