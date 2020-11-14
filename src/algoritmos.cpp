@@ -5,7 +5,7 @@ bool mysort(const std::pair<Celda*, float> &a, const std::pair<Celda*, float> &b
   return (a.second < b.second);
 }
 
-std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado)
+void Heuristica(std::vector<Celda*>& vector_desordenado)
 {
   std::vector<std::pair<Celda*, float>> nuevo_vector;
   for (int i = 0; i < vector_desordenado.size(); i++)
@@ -25,12 +25,10 @@ std::vector<Celda*> Heuristica(std::vector<Celda*>& vector_desordenado)
 
   std::sort(nuevo_vector.begin(), nuevo_vector.end(), mysort);
 
-  std::vector<Celda*> vector_ordenado;
-  for (int i = 0; i < nuevo_vector.size(); i++)
-  {
-    vector_ordenado.push_back(nuevo_vector[i].first);
+  vector_desordenado.clear();
+  for (int i = 0; i < nuevo_vector.size(); i++) {
+    vector_desordenado.push_back(nuevo_vector[i].first);
   }
-  return vector_ordenado;
 }
 
 bool estaprocesada(Celda* celda, const std::deque<Celda*>& procesados)
@@ -99,7 +97,7 @@ void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& pr
   }
   if (heuristico.size() > 1)
   {
-    heuristico = Heuristica(heuristico);
+    Heuristica(heuristico);
   }
   for (int i = 0; i < heuristico.size(); i++)
   {
