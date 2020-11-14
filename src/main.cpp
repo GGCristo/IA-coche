@@ -97,7 +97,10 @@ int main(int argc, char* argv[])
     auto t1 = std::chrono::high_resolution_clock::now();
     Elprimeromejor();
     auto t2 = std::chrono::high_resolution_clock::now();
-    std::cout << "El algoritmo tardó: " << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " microsegundos\n";
+    std::cout << "El algoritmo tardó:\n"
+              << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " microsegundos | "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count()/1000.0 << " milisegundos | "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count()/1000000.0 << " segundos\n";
 
     std::vector<Celda*> recorrido;
     if (Malla::get_instance().getEstadoFinal().getRetorno() == nullptr)
