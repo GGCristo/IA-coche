@@ -20,8 +20,6 @@ class Malla
   private:
     static int PorcentajeDeObstaculos;
     MATRIX Malla_;
-    int M_; // Filas
-    int N_; // Columnas
     Celda* EstadoInicial;
     Celda* EstadoFinal;
     /**
@@ -54,6 +52,8 @@ class Malla
     void Levantar_muros();
     Malla();
   public:
+    int M_; // Filas
+    int N_; // Columnas
     static std::ifstream fichero_;
 
     static Malla& get_instance();

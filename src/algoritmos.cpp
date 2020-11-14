@@ -55,45 +55,59 @@ bool estaenvisitas(Celda* celda, const std::deque<Celda*>& visitaras)
   return false;
 }
 
+bool encontrar(Celda* celda, const std::vector<Celda*>& cola)
+{
+  for (auto it = cola.begin(); it != cola.end(); ++it)
+  {
+    if (*it == celda)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 void Elprimeromejor()
 {
-  std::deque<Celda*> visitaras;
-  std::deque<Celda*> procesados;
-  ElMejor(Malla::get_instance().getEstadoInicial(), visitaras, procesados);
+  std::vector<Celda*> cola;
+  cola.reserve(Malla::get_instance().M_*Malla::get_instance().N_);
+  cola.push_back(&Malla::get_instance().getEstadoInicial());
+  std::vector<Celda*>::iterator it = cola.begin();
+  ElMejor(cola, it);
 }
 
 // TODO no puedo hacer a la celda constante
-void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& procesados)
+void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
 {
-  if (celda.get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
-      celda.get_j() == Malla::get_instance().getEstadoFinal().get_j())
+  if ((*it)->get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
+      (*it)->get_j() == Malla::get_instance().getEstadoFinal().get_j())
   {
     return;
   }
-  Celda* NORTE = &Malla::get_instance()[celda.get_i() - 1][celda.get_j()];
-  Celda* SUR   = &Malla::get_instance()[celda.get_i() + 1][celda.get_j()];
-  Celda* OESTE = &Malla::get_instance()[celda.get_i()][celda.get_j() - 1];
-  Celda* ESTE  = &Malla::get_instance()[celda.get_i()][celda.get_j() + 1];
+  Celda* NORTE = &Malla::get_instance()[(*it)->get_i() - 1][(*it)->get_j()];
+  Celda* SUR   = &Malla::get_instance()[(*it)->get_i() + 1][(*it)->get_j()];
+  Celda* OESTE = &Malla::get_instance()[(*it)->get_i()][(*it)->get_j() - 1];
+  Celda* ESTE  = &Malla::get_instance()[(*it)->get_i()][(*it)->get_j() + 1];
   std::vector<Celda*> heuristico;
-  if (!NORTE->getOcupacion() && !estaprocesada(NORTE, procesados) && !estaenvisitas(NORTE, visitaras))
+  if (!NORTE->getOcupacion() && !encontrar(NORTE, cola))
   {
     heuristico.push_back(NORTE);
-    NORTE->setRetorno(&celda);
+    NORTE->setRetorno(*it);
   }
-  if (!SUR->getOcupacion() && !estaprocesada(SUR, procesados) && !estaenvisitas(SUR, visitaras))
+  if (!SUR->getOcupacion() && !encontrar(SUR, cola))
   {
     heuristico.push_back(SUR);
-    SUR->setRetorno(&celda);
+    SUR->setRetorno(*it);
   }
-  if (!OESTE->getOcupacion() && !estaprocesada(OESTE,procesados) && !estaenvisitas(OESTE, visitaras))
+  if (!OESTE->getOcupacion()&& !encontrar(OESTE, cola))
   {
     heuristico.push_back(OESTE);
-    OESTE->setRetorno(&celda);
+    OESTE->setRetorno(*it);
   }
-  if (!ESTE->getOcupacion() && !estaprocesada(ESTE, procesados) && !estaenvisitas(ESTE, visitaras))
+  if (!ESTE->getOcupacion() && !encontrar(ESTE, cola))
   {
     heuristico.push_back(ESTE);
-    ESTE->setRetorno(&celda);
+    ESTE->setRetorno(*it);
   }
   if (heuristico.size() > 1)
   {
@@ -101,16 +115,13 @@ void ElMejor(Celda& celda, std::deque<Celda*>& visitaras, std::deque<Celda*>& pr
   }
   for (int i = 0; i < heuristico.size(); i++)
   {
-    visitaras.push_back(heuristico[i]);
+    cola.push_back(heuristico[i]);
   }
-
-  if (visitaras.empty())
+//CUIDADO
+  if (++it == cola.end())
   {
     return;
   }
 
-  Celda* nueva = visitaras.front();
-  visitaras.erase(visitaras.begin());
-  procesados.push_back(&celda);
-  ElMejor(*nueva, visitaras, procesados);
+  ElMejor(cola, it);
 }
