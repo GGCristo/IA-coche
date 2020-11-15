@@ -132,7 +132,6 @@ void Malla::EstablecesFilasyColumnas()
   }
   else
   {
-    // TODO
     std::string linea_fichero;
     getline(fichero_, linea_fichero);
     M_ = atoi(linea_fichero.c_str()) + 2;
@@ -165,59 +164,59 @@ const int Malla::getN()
 
 void Malla::Click(int x, int y)
 {
-  int i_ = int(( (float)y ) / Malla_[0][0].getSize().x);
-  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  if (Malla_[i_][j_].getEstado() != vr::MURO)
+  int i = int(( (float)y ) / Malla_[0][0].getSize().x);
+  int j = int(( (float)x ) / Malla_[0][0].getSize().y);
+  if (Malla_[i][j].getEstado() != vr::MURO)
   {
-    if (Malla_[i_][j_].getOcupacion())
+    if (Malla_[i][j].getOcupacion())
     {
-      Malla_[i_][j_].setEstado(vr::DEFAULT);
+      Malla_[i][j].setEstado(vr::DEFAULT);
     }
-    else if (Malla_[i_][j_].getEstado() == vr::DEFAULT)
+    else if (Malla_[i][j].getEstado() == vr::DEFAULT)
     {
-      Malla_[i_][j_].setEstado(vr::OBSTACULO);
+      Malla_[i][j].setEstado(vr::OBSTACULO);
     }
   }
 }
 
 void Malla::Control_Entrada_Pixel(int x, int y)
 {
-  int i_ = int(((float)y) / Malla_[0][0].getSize().x);
-  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  Control_Entrada(i_, j_);
+  int i = int(((float)y) / Malla_[0][0].getSize().x);
+  int j = int(( (float)x ) / Malla_[0][0].getSize().y);
+  Control_Entrada(i, j);
 }
 
 void Malla::Control_Salida_Pixel(int x, int y)
 {
-  int i_ = int(((float)y) / Malla_[0][0].getSize().x);
-  int j_ = int(( (float)x ) / Malla_[0][0].getSize().y);
-  Control_Salida(i_, j_);
+  int i = int(((float)y) / Malla_[0][0].getSize().x);
+  int j = int(( (float)x ) / Malla_[0][0].getSize().y);
+  Control_Salida(i, j);
 }
 
-void Malla::Control_Entrada(int i_, int j_) {
-  std::cout << i_ << " " << j_ << std::endl;
-  if (Malla_[i_][j_].getEstado() != vr::FINAL &&
-      Malla_[i_][j_].getEstado() != vr::MURO)
+void Malla::Control_Entrada(int i, int j) {
+  if (i <= M_ - 1 && j <= N_ - 1 &&
+      Malla_[i][j].getEstado() != vr::FINAL &&
+      Malla_[i][j].getEstado() != vr::MURO)
   {
     if (EstadoInicial)
     {
       EstadoInicial->setEstado(vr::DEFAULT);
     }
-    ColocarPunto(vr::INICIAL, i_, j_);
+    ColocarPunto(vr::INICIAL, i, j);
   }
 }
 
-void Malla::Control_Salida(int i_, int j_)
+void Malla::Control_Salida(int i, int j)
 {
-  std::cout << i_ << " " << j_ << std::endl;
-  if (Malla_[i_][j_].getEstado() != vr::INICIAL &&
-      Malla_[i_][j_].getEstado() != vr::MURO)
+  if (i <= M_ - 1 && j <= N_ - 1 &&
+      Malla_[i][j].getEstado() != vr::INICIAL &&
+      Malla_[i][j].getEstado() != vr::MURO)
   {
     if (EstadoFinal)
     {
       EstadoFinal->setEstado(vr::DEFAULT);
     }
-    ColocarPunto(vr::FINAL, i_, j_);
+    ColocarPunto(vr::FINAL, i, j);
   }
 }
 

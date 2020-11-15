@@ -52,7 +52,6 @@ void Elprimeromejor()
   ElMejor(cola, it);
 }
 
-// TODO no puedo hacer a la celda constante
 void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
 {
   if ((*it)->get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
@@ -90,11 +89,12 @@ void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
   {
     Heuristica(heuristico);
   }
+  // TODO
   for (int i = 0; i < heuristico.size(); i++)
   {
     cola.push_back(heuristico[i]);
   }
-//CUIDADO
+
   if (++it == cola.end())
   {
     std::cout << "Nodos expandidos: " << cola.size() << '\n';

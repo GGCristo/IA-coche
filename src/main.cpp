@@ -14,7 +14,6 @@
 #include <iostream>
 #include <fstream>
 
-// TODO mejorar respuesta del esc, no permitir pinchar fuera
 int Malla::PorcentajeDeObstaculos = 10;
 std::ifstream Malla::fichero_;
 int opcion_heuristico = 0;
