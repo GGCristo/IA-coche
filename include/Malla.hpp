@@ -22,6 +22,8 @@ class Malla
     MATRIX Malla_;
     Celda* EstadoInicial;
     Celda* EstadoFinal;
+    int M_; // Filas
+    int N_; // Columnas
     /**
      * @brief Poner obstaculos aleatorios por la malla
      *        Se crea una lista de números y se van sacando números aleatorios
@@ -52,8 +54,6 @@ class Malla
     void Levantar_muros();
     Malla();
   public:
-    int M_; // Filas
-    int N_; // Columnas
     static std::ifstream fichero_;
 
     static Malla& get_instance();

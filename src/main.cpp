@@ -119,6 +119,7 @@ int main(int argc, char* argv[])
       std::reverse(recorrido.begin(), recorrido.end());
     }
 
+    std::cout << "Longitud minima: " << recorrido.size() << '\n';
     main_loop(window, recorrido);
   }
   return 0;

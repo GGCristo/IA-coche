@@ -168,7 +168,6 @@ void Malla::Click(int x, int y)
       Malla_[i_][j_].setEstado(vr::OBSTACULO);
     }
   }
-  std::cout << "He pinchado en: " << i_ << j_ << '\n';
 }
 
 void Malla::Control_Entrada_Pixel(int x, int y)

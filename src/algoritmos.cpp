@@ -31,30 +31,6 @@ void Heuristica(std::vector<Celda*>& vector_desordenado)
   }
 }
 
-bool estaprocesada(Celda* celda, const std::deque<Celda*>& procesados)
-{
-  for (const auto &i: procesados)
-  {
-    if (celda == i)
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
-bool estaenvisitas(Celda* celda, const std::deque<Celda*>& visitaras)
-{
-  for (const auto &i : visitaras)
-  {
-    if (celda == i)
-    {
-      return true;
-    }
-  }
-  return false;
-}
-
 bool encontrar(Celda* celda, const std::vector<Celda*>& cola)
 {
   for (auto it = cola.begin(); it != cola.end(); ++it)
@@ -82,6 +58,7 @@ void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
   if ((*it)->get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
       (*it)->get_j() == Malla::get_instance().getEstadoFinal().get_j())
   {
+    std::cout << "Nodos expandidos: " << cola.size() << '\n';
     return;
   }
   Celda* NORTE = &Malla::get_instance()[(*it)->get_i() - 1][(*it)->get_j()];
@@ -120,6 +97,7 @@ void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
 //CUIDADO
   if (++it == cola.end())
   {
+    std::cout << "Nodos expandidos: " << cola.size() << '\n';
     return;
   }
 
