@@ -20,10 +20,10 @@ class Malla
   private:
     static int PorcentajeDeObstaculos;
     MATRIX Malla_;
+    Celda* EstadoInicial;
+    Celda* EstadoFinal;
     int M_; // Filas
     int N_; // Columnas
-    std::pair<int, int> EstadoInicial;
-    std::pair<int, int> EstadoFinal;
     /**
      * @brief Poner obstaculos aleatorios por la malla
      *        Se crea una lista de números y se van sacando números aleatorios
@@ -58,10 +58,13 @@ class Malla
 
     static Malla& get_instance();
     void EstablecesFilasyColumnas();
-    const int& getRow() const;
-    const int& getColumn() const;
-    const std::pair<int, int>& getEstadoInicial() const;
-    const std::pair<int, int>& getEstadoFinal() const;
+    Malla(const Malla&) = delete;
+    Malla& operator = (const Malla&) = delete;
+
+    Celda& getEstadoInicial();
+    Celda& getEstadoFinal();
+    const int getM();
+    const int getN();
     void Click(int, int);
     void Control_Entrada(int, int);
     void Control_Salida(int, int);

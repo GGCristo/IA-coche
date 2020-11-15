@@ -13,13 +13,11 @@ ERRORES
 2 = El estado no existe
 
 EstadoFinal y EstadoInicial no se consideran ocupados [Mapa.cpp 125]
-EFinal_ no se usa nunca
+No uses recorrido despues de crear un coche, utilize move en el constructor
 
 TODO
 Poner rotación en la función move
-Instrucciones para el usuario
 Poner animaciones en la función move
-Arreglar porcentajes de obstaculos (si el numero aleatorio cae en una celda que ya
-es una caja vuelve a intentarlo) (ten cuidado con porcentajes altos, que pueden llevar tiempo)
-Termina de documentar
-Leer estructura de la malla por fichero
+Terminar de documentar
+Echarle un ojo al enter
+Mira a ver si puedes trabajar con celdas constantes

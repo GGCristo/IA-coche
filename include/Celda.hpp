@@ -15,17 +15,13 @@ class Celda: public sf::Drawable
     int i_;
     int j_;
     int Estado_;
-    bool EFinal_;
+    Celda* retorno_;
 
     // Interfaz
     /**
      * @celda Instancia para la interfaz
      */
     sf::RectangleShape celda;
-    /**
-     * @muros Los 4 muros que rodean cada celda, para cear el efecto de malla
-     */
-    std::array<sf::RectangleShape, 4> muros;
 
   public:
     /**
@@ -56,6 +52,11 @@ class Celda: public sf::Drawable
      *
      */
     void Ocupar();
+    const int get_i() const;
+    const int get_j() const;
+    void setRetorno(Celda*);
+    // const Celda* getRetorno();
+    Celda* getRetorno() const;
     /**
      * @brief Devuelve el "Estado_" en el que se encuentra la celda
      *

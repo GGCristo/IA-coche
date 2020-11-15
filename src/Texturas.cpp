@@ -27,6 +27,10 @@ Texturas::Texturas()
   {
     throw "Fallo al cargar la textura de los muros";
   }
+  if (!texturas[6].loadFromFile("assets/Graphics/dirt.jpg"))
+  {
+    throw "Fallo al cargar la textura de la tierra";
+  }
 }
 
 const sf::Texture& Texturas::getTexturas(const int& i)
