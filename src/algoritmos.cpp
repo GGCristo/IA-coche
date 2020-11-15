@@ -54,12 +54,6 @@ void Elprimeromejor()
 
 void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
 {
-  if ((*it)->get_i() == Malla::get_instance().getEstadoFinal().get_i() &&
-      (*it)->get_j() == Malla::get_instance().getEstadoFinal().get_j())
-  {
-    std::cout << "Nodos expandidos: " << cola.size() << '\n';
-    return;
-  }
   Celda* NORTE = &Malla::get_instance()[(*it)->get_i() - 1][(*it)->get_j()];
   Celda* SUR   = &Malla::get_instance()[(*it)->get_i() + 1][(*it)->get_j()];
   Celda* OESTE = &Malla::get_instance()[(*it)->get_i()][(*it)->get_j() - 1];
@@ -67,33 +61,62 @@ void ElMejor(std::vector<Celda*>& cola, std::vector<Celda*>::iterator& it)
   std::vector<Celda*> heuristico;
   if (!NORTE->getOcupacion() && !encontrar(NORTE, cola))
   {
-    heuristico.push_back(NORTE);
     NORTE->setRetorno(*it);
+    if (NORTE == &Malla::get_instance().getEstadoFinal())
+    {
+      std::cout << "Nodos expandidos: " << cola.size() << '\n';
+      return;
+    }
+    else
+    {
+      heuristico.push_back(NORTE);
+    }
   }
   if (!SUR->getOcupacion() && !encontrar(SUR, cola))
   {
-    heuristico.push_back(SUR);
     SUR->setRetorno(*it);
+    if (SUR == &Malla::get_instance().getEstadoFinal())
+    {
+      std::cout << "Nodos expandidos: " << cola.size() << '\n';
+      return;
+    }
+    else
+    {
+      heuristico.push_back(SUR);
+    }
   }
   if (!OESTE->getOcupacion()&& !encontrar(OESTE, cola))
   {
-    heuristico.push_back(OESTE);
     OESTE->setRetorno(*it);
+    if (OESTE == &Malla::get_instance().getEstadoFinal())
+    {
+      std::cout << "Nodos expandidos: " << cola.size() << '\n';
+      return;
+    }
+    else
+    {
+      heuristico.push_back(OESTE);
+    }
   }
   if (!ESTE->getOcupacion() && !encontrar(ESTE, cola))
   {
-    heuristico.push_back(ESTE);
     ESTE->setRetorno(*it);
+    if (ESTE == &Malla::get_instance().getEstadoFinal())
+    {
+      std::cout << "Nodos expandidos: " << cola.size() << '\n';
+      return;
+    }
+    else
+    {
+      heuristico.push_back(ESTE);
+    }
   }
   if (heuristico.size() > 1)
   {
     Heuristica(heuristico);
   }
-  // TODO
-  for (int i = 0; i < heuristico.size(); i++)
-  {
-    cola.push_back(heuristico[i]);
-  }
+
+  cola.insert(cola.end(), heuristico.begin(), heuristico.end());
 
   if (++it == cola.end())
   {
